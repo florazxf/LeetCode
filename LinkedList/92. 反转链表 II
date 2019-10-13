@@ -1,0 +1,74 @@
+/*反转从位置 m 到 n 的链表。请使用一趟扫描完成反转。
+
+说明:
+1 ≤ m ≤ n ≤ 链表长度。
+
+示例:
+
+输入: 1->2->3->4->5->NULL, m = 2, n = 4
+输出: 1->4->3->2->5->NULL
+*/
+
+//第一步：找到要反转链表的起始结点，并把起始结点的前一个结点记录下来为dummy
+//第二步：进行m-n次迭代进行反转，并把反转的最后一个结点记录下来为end
+//第三步：把原来的dummy的next和反转后的第一个结点连起来，end的next和之前剩下的结点连起来
+
+class Solution {
+public:
+    ListNode* reverseBetween(ListNode* head, int m, int n) {
+        
+        if(head==NULL or head->next==NULL or m==n){ //只有一个结点或没有结点不需要反转，m和n相等也不用反转
+            return head;
+        }
+        
+        else if(head->next->next==NULL){ //只有两个结点 进行反转
+            ListNode *p=head->next;
+            p->next=head;
+            head->next = NULL;
+            return p; 
+        }
+        
+        ListNode* p1 = head;
+        ListNode* p2 = p1->next;
+        ListNode* p3 = p2->next;
+        ListNode* dummy = new ListNode(0);   //记录要反转的前一个结点，最后让dummy->next是反转后的结点的头结点
+        ListNode* end=p1;
+        dummy->next = head;  
+        int flag=0;
+        int b;
+        b = n-m;
+        while(b){
+            if(m>1){  //到达要反转的起始结点之前要进行的操作：p1、p2、p3都向后移
+            flag=1;
+            p1 = p1->next;
+            p2 = p2->next;
+            p3 = p3->next;
+            dummy = dummy->next;
+            
+            m=m-1;
+                
+            if(m==1){
+                end = p1; //把反转后的尾结点记录下来
+                
+            }
+            }
+            else 
+            {//开始反转
+                p3 = p2->next;
+                p2->next = p1;
+                p1 = p2;
+                p2 = p3;
+                
+                b = b-1;
+                
+                if(b==0){ //反转结束
+                    dummy->next = p1; //把反转后的链表接到之前的后面(m之前的结点)
+                    end->next = p2;   //把反转后的最后一个结点和之前剩下的结点接起来
+                    if(flag==0)return dummy->next; //输入m=1的情况
+                    return head;
+                }
+            }
+        }
+     return head;
+    }
+};
