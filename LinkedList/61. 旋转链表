@@ -1,0 +1,42 @@
+/*
+给定一个链表，旋转链表，将链表每个节点向右移动 k 个位置，其中 k 是非负数。
+输入: 1->2->3->4->5->NULL, k = 2
+输出: 4->5->1->2->3->NULL
+解释:
+向右旋转 1 步: 5->1->2->3->4->NULL
+向右旋转 2 步: 4->5->1->2->3->NULL
+*/
+
+//要注意的是做k%l次旋转就可以了
+class Solution {
+public:
+    ListNode* rotateRight(ListNode* head, int k) {
+        if(head==NULL or head->next==NULL){return head;}
+        int i;
+        ListNode *p = head;
+        ListNode *q = head->next;
+        int l=0; //链表长度
+        //计算出链表的长度
+        while(p){
+            l=l+1;
+            p=p->next;
+        }
+        k = k%l;   //只要做l次旋转则链表和旋转前的链表一样，所以我们只需要旋转k%l次
+        p=head;
+        for(i=0;i<k;i++){
+            //每一次旋转要做的操作
+            while(q->next!=NULL){ //找到倒数第一个结点和倒数第二个结点
+                p=p->next;
+                q=q->next;
+            }
+            q->next = head; //倒数第一个结点的next指向head
+            p->next = NULL; //倒数第二个结点的next指向NULL
+            //重新对head、p和q赋值
+            head = q;
+            p = head;
+            q = p->next;
+            
+        }
+        return head;
+    }
+};
