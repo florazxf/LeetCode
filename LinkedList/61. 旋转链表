@@ -8,6 +8,39 @@
 */
 
 //要注意的是做k%l次旋转就可以了
+
+
+//方法一： 找到旧链表的尾，让其next为head；找到新链表的尾，让其next为null
+class Solution {
+public:
+    ListNode* rotateRight(ListNode* head, int k) {
+        if(head==NULL or head->next==NULL){return head;}
+        int n=1; //链表长度
+        int i=0;
+        ListNode* new_tail = head; //新链表的尾
+        ListNode* old_tail = head; //旧链表的尾
+        
+        //找到旧链表的尾部，让其next为head；也得到了链表的长度n
+        while(old_tail->next!=NULL){
+            old_tail = old_tail->next;
+            n = n+1;
+        }
+        old_tail->next = head; //旧链表的next为head
+        
+        cout<<n;
+        //找到新链表的尾部
+        for(i=0;i<n-k%n-1;i++){
+            new_tail = new_tail->next;
+        }
+        head=new_tail->next; //新链表的头
+        new_tail->next = NULL;  //新链表的尾为NULL
+        
+        return head;
+    }
+};
+
+//方法二：自己做的
+
 class Solution {
 public:
     ListNode* rotateRight(ListNode* head, int k) {
