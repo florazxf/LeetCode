@@ -1,0 +1,78 @@
+/*
+给出一个以头节点 head 作为第一个节点的链表。链表中的节点分别编号为：node_1, node_2, node_3, ... 。
+每个节点都可能有下一个更大值（next larger value）：对于 node_i，如果其 next_larger(node_i) 是 node_j.val，那么就有 j > i 且  node_j.val > node_i.val，而 j 是可能的选项中最小的那个。如果不存在这样的 j，那么下一个更大值为 0 。
+返回整数答案数组 answer，其中 answer[i] = next_larger(node_{i+1}) 。
+
+输入：[1,7,5,1,9,2,5,1]
+输出：[7,9,9,9,0,5,0,0]
+*/
+
+//方法一：用栈
+//遍历每个结点，如果当前结点的值比栈顶元素大，就说明找到了栈顶元素的，就把vector中此位置的值修改为当前值，继续和栈顶元素比较；把结点的值和结点的坐标压到栈中
+
+
+class Solution {
+public:
+    vector<int> nextLargerNodes(ListNode* head) {
+        
+        vector<int> a;
+        stack<pair<int, int>> tmp; //first为value，second为下标
+        int count=0; //在vector中的坐标
+        
+        while(head){
+            a.push_back(0);//每次先给vector中放入零，有比它大的值再修改
+            while(!tmp.empty() and head->val>tmp.top().first){//栈不为空且head的值比栈顶元素值大
+                //证明栈顶元素找到了值，所以出栈，且修改vector中的值
+                a[tmp.top().second] = head->val; //用栈顶元素的坐标修改a中相应的值
+                tmp.pop();//栈顶元素出栈
+            }
+            tmp.push(make_pair(head->val, count++)); //每把head放进栈中后，head向后移找下一个结点，count也就相应加1
+            head = head->next; //下一个节点
+
+        }
+        
+        return a;
+    }
+};
+//方法一：自己写的时候的方法，就是用遍历p，对每个p找离他最近的比他大的值 
+//缺点： 耗时  
+class Solution {
+public:
+    vector<int> nextLargerNodes(ListNode* head) {
+        vector<int> a;
+        if(head==NULL){return a;}
+        if(head->next==NULL){ 
+            a.push_back(0);
+            return a;
+        }
+        ListNode* p = head;
+        ListNode* q = p->next;
+        int max;
+        int flag=0;
+        while(p->next!=NULL){    
+            
+            max = p->val;
+            q = p->next;
+            flag=0;
+            
+            while(q){   //找比当前p大的值
+            if(q->val>max){
+                max = q->val;
+                flag=1; 
+                break;      //找的是最近最大的结点的值，所以一有最大的就直接返回
+            }
+                q = q->next;
+            }
+            if(flag==1){a.push_back(max);}
+            else{a.push_back(0);}
+            p = p->next; 
+            
+        }
+        
+        a.push_back(0);
+        
+        return a;
+        
+    }
+};
+
