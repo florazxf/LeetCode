@@ -58,3 +58,51 @@ public:
         return s_new;
     }   
 };
+
+
+//方法二：
+class Solution {
+public:
+    string removeOuterParentheses(string S) {
+        stack<char>tmp;
+        string s_new="";
+
+        for(int i=0;i<S.size();i++){
+            
+            if(S[i]==')'){
+                tmp.pop();
+            }
+            if(!tmp.empty()){
+                s_new = s_new+S[i]; //只要当前栈不为空就证明是要的S[i]
+            }
+            if(S[i]=='('){
+                tmp.push('(');
+            }
+        }
+        return s_new;
+    }   
+};
+
+// 方法三：不用栈，判断左右括号数量 这种方法比用栈的时间快很多
+ class Solution {
+public:
+    string removeOuterParentheses(string S) {
+        int L=1;//左括号的数量
+        int R=0;//右括号的数量
+        string ans;
+        for(int i=1;i<S.size();i++){
+            if(S[i]=='(')
+                L++;
+            else 
+                R++;
+            if(R!=L) 
+                ans.push_back(S[i]);
+            else {   //左括号数量和右括号数量相等时，一个原语结束
+                i++;  // 把每个原语初始的左括号跳过，所以L的初始值为1
+                L=1;
+                R=0;
+            }
+        }
+        return ans;
+    }
+};
