@@ -1,0 +1,71 @@
+/*
+给出一个字符串 s（仅含有小写英文字母和括号）。
+
+请你按照从括号内到外的顺序，逐层反转每对匹配括号中的字符串，并返回最终的结果。
+
+注意，您的结果中 不应 包含任何括号。
+
+输入：s = "a(bcdefghijkl(mno)p)q"
+输出："apmnolkjihgfedcbq"
+*/
+
+//思路：见左括号就压入空串，见右括号就把栈顶的串逆序后再和前面的字符串合并
+
+//注意：只要有出栈操作就先判断栈是否为空
+class Solution {
+public:
+    string reverseParentheses(string s) {
+        stack<string>tmp;
+        string s1="";
+        string s2;
+        string s3;
+        
+        for(int i=0;i<s.size();i++){
+            if(s[i]=='('){ //遇到左括号压入空串
+                s1 = "";
+                tmp.push(s1);
+                
+            }
+            else if(s[i]==')'){//遇右括号将栈顶的字符串逆序并和前面的字符串合并，如果前面没有字符串就直接将逆序后的入栈
+                
+                s2 = tmp.top();                
+                reverse(s2.begin(),s2.end());//对字符串逆序
+                tmp.pop();
+                
+                if(!tmp.empty()){ //栈不为空就把逆序的字符串和前面的合并
+                
+                s3 = tmp.top();
+                s3 = s3+s2;
+                tmp.pop();
+                tmp.push(s3);
+                }
+                else{            //栈为空就把逆序后的字符串再入栈
+                    tmp.push(s2);
+                }
+       
+                
+            }
+            else{
+                if(!tmp.empty()){
+                    s2 = tmp.top();
+                    s2 = s2+s[i];
+                    tmp.pop();
+                    tmp.push(s2);
+                    
+                }
+                else{  //栈为空前面没有需要连接的字符串，直接把当前的字母入栈
+                    s2 = s[i];
+                    tmp.push(s2);
+                }
+
+            }
+        }
+        
+        while(!tmp.empty()){ //最后栈中的唯一元素就是我们要的结果
+            return tmp.top();
+        }
+        return s1;
+        
+    }
+                
+};
