@@ -1,0 +1,130 @@
+/*
+给定一个经过编码的字符串，返回它解码后的字符串。
+
+编码规则为: k[encoded_string]，表示其中方括号内部的 encoded_string 正好重复 k 次。注意 k 保证为正整数。
+
+你可以认为输入字符串总是有效的；输入字符串中没有额外的空格，且输入的方括号总是符合格式要求的。
+
+此外，你可以认为原始数据不包含数字，所有的数字只表示重复的次数 k ，例如不会出现像 3a 或 2[4] 的输入。
+
+示例:
+
+s = "3[a]2[bc]", 返回 "aaabcbc".
+s = "3[a2[c]]", 返回 "accaccacc".
+s = "2[abc]3[cd]ef", 返回 "abcabccdcdcdef".
+
+
+*/
+//方法一：用两个栈，一个num栈存k，一个strs存字符串
+class Solution {
+public:
+    string decodeString(string s) {
+        
+        stack<int> nums;
+        stack<string> strs;
+        int num=0;
+        string res="";
+        int k;
+        for(int i=0;i<s.size();i++){
+            if(s[i]>='0' && s[i]<='9'){
+                num = num*10+s[i]-'0';
+            }
+            else if(s[i]=='['){//将‘[’前的数字压入nums栈内， 字母字符串压入strs栈内
+                nums.push(num);
+                num = 0;
+                strs.push(res);
+                res="";
+            }
+            else if(s[i]>='a'&&s[i]<='z' || s[i]>='A'&&s[i]<='Z'){//s[i]是字母
+                res = res+s[i];
+            }
+            else if(s[i]==']'){ //对栈顶元素重复k次
+                k = nums.top();
+                nums.pop();
+                while(k){
+                    strs.top()+=res;
+                    k=k-1;
+                }
+                
+                res = strs.top(); //之后若还是字母，就会直接加到res之后，因为它们是同一级的运算
+                                  //若是左括号，res会被压入strs栈，作为上一层的运算
+                strs.pop();
+            }
+
+            }
+        
+        return res;
+        }
+        
+
+    
+};
+
+//方法二：自己的方法，用一个vector存k
+class Solution {
+public:
+    string decodeString(string s) {
+        stack<string>tmp;
+        int k;
+        string s1="";
+        string s2;
+        string s3;
+        string jj="";
+        string s4="";
+        vector<int>kk; //因为有内嵌括号，所以把所有的k都存到vector中，遇到[就把vector末尾的取出来
+        for(int i=0;i<s.size();i++){
+            if(s[i]=='0'||s[i]=='1'||s[i]=='2'||s[i]=='3'||s[i]=='4'||s[i]=='5'||s[i]=='6'||s[i]=='7'||s[i]=='8'||s[i]=='9'){
+            jj = jj+s[i]; 
+            
+            }
+            
+            else if(s[i]=='['){//遇到[压入空串
+                kk.push_back(stoi(jj));
+                jj="";
+                tmp.push(s1);
+                
+            }
+            else if(s[i]==']'){//遇到]将栈顶元素重复k次后，和前面的字符串合并
+                s2 = tmp.top();
+                s4 = "";
+                k = kk[kk.size()-1]; //把末尾元素取出来
+                kk.pop_back();
+                while(k){
+                    s4 = s4+s2;
+                    k=k-1;
+                }
+                tmp.pop();
+                if(!tmp.empty()){
+                    s3 = tmp.top();
+                    s3 = s3+s4;
+                    tmp.pop();
+                    tmp.push(s3);
+                    
+                }
+                else{
+                    tmp.push(s4);
+                }
+            }
+            else{ //是字母
+                if(!tmp.empty()){
+                    s2 = tmp.top();
+                    s2 = s2+s[i];
+                    tmp.pop();
+                    tmp.push(s2);
+                }
+                else{ 
+                    s2 = s[i];
+                    tmp.push(s2);
+                }
+            }
+        }
+        
+        
+        if(!tmp.empty()){
+            return tmp.top();
+        }
+        
+        return s1;
+        
+    }
+};
