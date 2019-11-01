@@ -29,7 +29,48 @@
 输出："ps"
 */
 
-// 速度不行
+//方法一：栈
+栈放字符及出现的次数
+class Solution {
+public:
+    string removeDuplicates(string s, int k) {
+        stack<char> tmp;  //放字符
+        stack<int> nums;  //放字符出现的次数
+        string res="";
+        for(int i=0;i<s.size();i++){
+            if(tmp.empty()||tmp.top()!=s[i]){
+                tmp.push(s[i]);
+                nums.push(1);
+            }
+            else{
+                nums.top()+=1;
+                if(nums.top()==k){//栈顶字符出现k次，则删除
+                    tmp.pop();
+                    nums.pop();
+                }
+            }
+        }
+        
+        //输出栈里的字符
+        while(!tmp.empty()){
+            int h = nums.top();//根据nums的次数决定＋几次
+            while(h){
+                res+=tmp.top();
+                h--;
+            }
+            
+            tmp.pop();
+            nums.pop();
+            
+        }
+        
+        reverse(res.begin(),res.end());
+        return res;
+        
+    }
+};
+// 方法二：原地算法
+速度不行
 class Solution {
 public:
     string removeDuplicates(string s, int k) {
