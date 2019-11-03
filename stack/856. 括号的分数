@@ -1,0 +1,126 @@
+/*
+给定一个平衡括号字符串 S，按下述规则计算该字符串的分数：
+
+() 得 1 分。
+AB 得 A + B 分，其中 A 和 B 是平衡括号字符串。
+(A) 得 2 * A 分，其中 A 是平衡括号字符串。
+
+示例 1：
+
+输入： "()"
+输出： 1
+
+示例 2：
+
+输入： "(())"
+输出： 2
+
+示例 3：
+
+输入： "()()"
+输出： 2
+
+示例 4：
+
+输入： "(()(()))"
+输出： 6
+
+*/
+//方法一：我的
+//用一个栈存当前(得分，遇到)则栈顶元素出栈；出栈时分(A)和AB两种，即栈顶为(和栈为空的情况。栈顶为(就将当前score加到栈顶的score，栈为空则将当前score加到scores。
+
+class Solution {
+public:
+    int scoreOfParentheses(string S) {
+        int score=0;
+        int scores = 0;
+        stack<pair<int,char>>tmp;
+        
+        for(int i=0;i<S.size();i++){
+            if(tmp.empty()){
+                tmp.push(make_pair(1,'('));
+            }
+            else{
+                if(tmp.top().second=='('){
+                    if(S[i]==')'){ //出栈
+                        score = tmp.top().first;
+                        tmp.pop();
+                        if(!tmp.empty() and tmp.top().second=='('){
+                            if(score==1){//()
+                                tmp.top().first+=score;
+                            }
+                            else{ //(A)
+                                tmp.top().first = tmp.top().first+ (score-1)*2;
+                                
+                            }
+                            
+                        }
+                        else{//AB
+                            if(score>1){  //(A)
+                                score = (score-1)*2;
+                            }
+                            scores += score;
+                        }
+                    }
+                    else{ //((
+                        tmp.push(make_pair(1,S[i]));
+                    }
+                }
+            }
+        }
+    
+        return scores;
+        
+    }
+};
+
+
+//方法二：
+
+/*
+我们用一个栈来维护当前所在的深度，以及每一层深度的得分。当我们遇到一个左括号 ( 时，我们将深度加一，并且新的深度的得分置为 0。当我们遇到一个右括号 ) 时，我们将当前深度的得分乘二并加到上一层的深度。这里有一种例外情况，如果遇到的是 ()，那么只将得分加一。
+
+下面给出了字符串 (()(())) 每次对应的栈的情况：
+
+[0, 0] (
+[0, 0, 0] ((
+[0, 1] (()
+[0, 1, 0] (()(
+[0, 1, 0, 0] (()((
+[0, 1, 1] (()(()
+[0, 3] (()(())
+[6] (()(()))
+
+*/
+class Solution {
+public:
+    int scoreOfParentheses(string S) {
+        
+        stack<int>tmp;
+        int m;
+        int n;
+        tmp.push(0);
+        int score=0;
+        for(int i=0;i<S.size();i++){
+            if(S[i]=='('){
+                tmp.push(0);
+            }
+            else{
+                m = tmp.top();
+                tmp.pop();
+                if(m==0){ //()
+                    tmp.top()+=1;
+                }
+                else{//(A)
+                    tmp.top()+=m*2;
+                }
+                
+            }
+            
+        }
+        
+        return tmp.top();
+   
+        
+    }
+};
