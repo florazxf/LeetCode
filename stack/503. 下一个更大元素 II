@@ -1,0 +1,46 @@
+/*
+给定一个循环数组（最后一个元素的下一个元素是数组的第一个元素），输出每个元素的下一个更大元素。数字 x 的下一个更大的元素是按数组遍历顺序，这个数字之后的第一个比它更大的数，这意味着你应该循环地搜索它的下一个更大的数。如果不存在，则输出 -1。
+
+示例 1:
+
+输入: [1,2,1]
+输出: [2,-1,2]
+解释: 第一个 1 的下一个更大的数是 2；
+数字 2 找不到下一个更大的数； 
+第二个 1 的下一个最大的数需要循环搜索，结果也是 2。
+
+注意: 输入数组的长度不会超过 10000。
+*/
+
+//第一步：先不考虑循环，先从当前元素的后面找下一个更大元素，找到就出栈
+//第二步：栈里剩下的元素就是没找到下一个更大元素的，就从前面找，找到就出栈
+
+class Solution {
+public:
+    vector<int> nextGreaterElements(vector<int>& nums) {
+        stack <pair<int,int>> tmp; //first是当前元素的值，second是找到的下一个更大元素的的索引或当前元素的索引
+        vector <int> res;
+        for(int i=0;i<nums.size();i++){ //先不考虑循环，在后面找最大元素
+            res.push_back(-1);
+            while(!tmp.empty() &&nums[i]>tmp.top().first){
+                res[tmp.top().second] = nums[i];
+                tmp.pop();           //找到最大值的都pop了
+            }
+                tmp.push(make_pair(nums[i],i)); //初始把当前元素的值和索引push到栈里
+            
+        }
+        
+        while(!tmp.empty()){ //剩下的就是没找到下一个最大元素的
+            int j = tmp.top().second;
+            for(int i=0;i<j;i++){ //从他的前面开始找
+                if(nums[i]>tmp.top().first){
+                    res[tmp.top().second] = nums[i];
+                    break;
+                }
+            }
+            tmp.pop();  //不管找没找到都出栈
+        }
+        
+        return res;
+    }
+};
