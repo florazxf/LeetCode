@@ -19,8 +19,32 @@
      请注意，你的答案必须是 子串 的长度，"pwke" 是一个子序列，不是子串。
 
 */
-//思路：遍历每一个字母，找到其最长不重复子串
 
+//方法一：滑动窗口 
+//学到的：用数组实现简易hash表 vector<int>hash(256,-1)； 
+
+//思路：用一个滑动窗口，滑动窗口中的字符都是不重复的，left为滑动窗口的左边界，当前遍历到的字符即i为滑动窗口的右边界，当遇到重复的则将滑动窗口的左边界右移到重复字符最后出现的位置，而这个位置我们已经存在数组里了
+class Solution {
+public:
+    int lengthOfLongestSubstring(string s) {
+        
+        vector<int>hash(256,-1); //用数组实现hash表，key是字母的ascill码，value是字母的位置，都初始化为-1代表字母没有出现过
+        
+        int left=-1; //滑动窗口的左边界
+        int res = 0; //滑动窗口的最大长度
+        for(int i=0;i<s.size();i++){
+            left = max(left,hash[s[i]]);//如果出现重复字符则left移到重复字符最后出现的位置，出现的重复字符但位置小于left证明不在滑动窗口中，所以不用移
+            hash[s[i]]=i;//hash表中存的是当前字母最后出现的位置
+            res = max(res,i-left);//i-left就是当前滑动窗口的长度
+        }
+        
+        return res;
+    }
+};
+
+
+//方法二：思路：遍历每一个字母，找到其最长不重复子串
+//自己做的，很慢
 class Solution {
 public:
     int lengthOfLongestSubstring(string s) {
