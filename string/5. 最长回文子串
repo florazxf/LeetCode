@@ -1,0 +1,137 @@
+给定一个字符串 s，找到 s 中最长的回文子串。你可以假设 s 的最大长度为 1000。
+
+示例 1：
+
+输入: "babad"
+输出: "bab"
+注意: "aba" 也是一个有效答案。
+示例 2：
+
+输入: "cbbd"
+输出: "bb"
+//方法一： 中心扩展算法
+//自己的理解：
+//找回文串的时候对s的每一个字符s[i]从中间往外扩，找到以此字符为中心的最大回文串；
+//分奇数的最大回文串和偶数的最大回文串
+class Solution {
+public:
+    string longestPalindrome(string s) {        
+        string res = "";
+        int left = 0;
+        int right = 0;
+        int maxleft = 0;
+        int maxright = 0;
+        int maxlen = 1;
+        
+        //找偶数的最大回文串
+        for(int i=0;i<s.size();i++){
+                left = i;
+                right = i+1;
+                while(s[left]==s[right]){ //判断以当前i和i+1为中心的回文串
+                    left --;
+                    right++;
+                if(left<0 || right>s.size()){
+                    break;
+                }
+                    
+                }
+                
+                if(maxlen < (right-left-1)){
+                    maxlen =  right - left -1;
+                    maxright = right-1;
+                    maxleft = left+1;
+                }
+            }
+            
+            
+        
+        //找奇数的最大回文串
+        
+        for(int i=0;i<s.size();i++){
+             
+            //判断以每个i为中心的最长回文子串
+            left = i;
+            right = i;
+            while(s[left]==s[right]){
+                left--;
+                right++;
+                if(left<0 || right>s.size()){
+                    break;
+                }
+            }
+            if(maxlen<(right-left-1)){
+                maxlen = right - left - 1;
+                maxright = right-1;
+                maxleft = left+1;
+            }
+            
+        }
+        
+
+        
+        for(int i = maxleft;i<=maxright;i++){ //得到res
+            res+=s[i];
+        }
+        return res;
+
+        
+    }
+};
+//方法二： 暴力法 自己的方法 效率低
+class Solution {
+public:
+    string longestPalindrome(string s) {
+        int left=0;
+        bool flag=0;//是1是是回文串
+        int maxleft = 0; //记录当前最长回文串的左边界
+        int maxright = 0;//记录当前最长回文串的右边界
+        int maxlen = 0; //记录当前最长回文串的长度
+        int ileft = 0;
+        int iright = 0;
+        string res = ""; //最长回文串
+        
+        for(left=0;left<s.size();left++){
+            
+        if(maxlen>(s.size()-left)){  //当剩下的长度小于等于maxlen的时候就不必要再判断了
+                    break;
+                }
+            for(int right = left+1;right<s.size();right++){
+                //判断是否是回文串
+                flag = 1;
+                ileft = left;
+                iright = right;
+                while(ileft<iright){
+                    if(s[ileft]==s[iright]){
+                        ileft++;
+                        iright--;
+                    }
+                else{
+                    flag=0; //不是回文串
+                    break;
+                }
+            }
+
+                if(flag){//是回文串
+                    int len = right-left+1;
+                    if(len>maxlen){ //当前的回文串比之前的长
+                        maxleft = left;
+                        maxright = right;
+                        maxlen = len;
+                    }     
+                }
+                
+            }
+        }
+
+
+        for(int i=maxleft;i<=maxright;i++){ //输出最长回文串
+            res+=s[i];
+        }
+            
+        
+        return res;
+
+        
+    }
+};
+
