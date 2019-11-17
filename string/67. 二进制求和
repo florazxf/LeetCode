@@ -1,0 +1,90 @@
+/*
+给定两个二进制字符串，返回他们的和（用二进制表示）。
+
+输入为非空字符串且只包含数字 1 和 0。
+
+示例 1:
+
+输入: a = "11", b = "1"
+输出: "100"
+示例 2:
+
+输入: a = "1010", b = "1011"
+输出: "10101"
+*/
+
+//方法二： 自己的方法
+//判断个字符串的长短，先根据短的把两个加起来，然后再根据进位对长的字符串剩下的部分加
+class Solution {
+public:
+    string addBinary(string a, string b) {
+        int lena = a.size();
+        int lenb = b.size();
+        int jinwei = 0;
+        int ai;
+        int bi;
+        int i = lena-1;
+        int j =  lenb-1;
+        string res="";
+
+        while ( i>=0 && j>=0 ){ //把a和b相同长度的部分加一下
+                
+ 
+                ai = a[i]-'0';
+                bi = b[j]-'0';
+                
+                if((ai+bi+jinwei)>1){//进位
+                    res+=(ai+bi+jinwei-2)+'0';
+                    jinwei = 1; 
+                }
+                else{
+                    res+=(ai+bi+jinwei)+'0';
+                    jinwei = 0;
+                }
+                i--;
+                j--;
+            }
+
+            if(i<0){ //b长
+            for(int z = (lenb-lena-1);z>=0;z--){
+                bi = b[z]-'0';
+                if((bi+jinwei) >1 ){//进位
+                    
+                    res+='0';
+                    jinwei = 1;
+                }
+                else{
+                    res+=(bi+jinwei)+'0';
+                    jinwei=0;
+                }
+                
+            }
+                
+            }
+        else{  //a长
+        for(int z = (lena-lenb-1);z>=0;z--){
+                ai = a[z]-'0';
+                if((ai+jinwei) >1 ){//进位
+                    
+                    res+='0';
+                    jinwei = 1;
+                }
+                else{
+                    res+=(ai+jinwei)+'0';
+                    jinwei=0;
+                }
+                
+            }
+        }
+
+            
+
+            
+            if(jinwei==1){
+                res+='1';
+            }
+        reverse(res.begin(),res.end());
+        return res;
+        
+    }
+};
