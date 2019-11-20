@@ -1,0 +1,58 @@
+/*
+给定一个仅包含数字 2-9 的字符串，返回所有它能表示的字母组合。
+
+给出数字到字母的映射如下（与电话按键相同）。注意 1 不对应任何字母。
+示例:
+
+输入："23"
+输出：["ad", "ae", "af", "bd", "be", "bf", "cd", "ce", "cf"].
+
+*/
+
+class Solution {
+public:
+    vector<string> letterCombinations(string digits) {
+        vector<string> tmp;
+        vector<string> res;
+        vector<string> digit;
+
+        int firstnum;
+        int secondnum;
+        int len;
+        string a;
+        
+        digit={"1","1","abc","def","ghi","jkl","mno","pqrs","tuv","wxyz"};//电话号码到字母的映射
+
+        
+        if(digits.size()==0){//输入字符串为空
+            return tmp;
+        }
+        for(int j=0;j<digit[digits[0]-'0'].size();j++){//用第一个数字(i=0)初始化tmp
+            a.push_back(digit[digits[0]-'0'][j]); //把char转成String
+            tmp.push_back(a);
+            a.clear();
+        }
+        
+        
+        for(int i=1;i<digits.size();i++){
+
+            secondnum = digits[i]-'0'; //得到当前的数字
+            len = digit[secondnum].size();
+            res.clear();
+            //把第i个数字对应的字母和之前得到的结果tmp一一相加
+            for(int j=0;j<tmp.size();j++){ //前面相加的结果
+                for(int z = 0;z<len;z++){//第i个数字对应的字母
+                    
+                    res.push_back(tmp[j]+digit[secondnum][z]);
+                    
+                }
+            }
+            tmp.clear();
+            tmp = res;
+            
+
+        }
+        return tmp;
+        
+    }
+};
