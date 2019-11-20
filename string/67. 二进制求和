@@ -12,6 +12,41 @@
 输入: a = "1010", b = "1011"
 输出: "10101"
 */
+//方法一：
+class Solution {
+public:
+    string addBinary(string a, string b) {
+        
+        
+        int lena = a.size();
+        int lenb = b.size();
+        int jinwei = 0;
+        
+        int ai;
+        int bi;
+        int sum=0;
+  
+        string res="";
+        
+        
+        for(int i=lena-1, j=lenb-1;i>=0||j>=0;i--,j--){
+            ai = i>=0?(a[i]-'0'):0;  //位数不够就给前面补零
+            bi = j>=0?(b[j]-'0'):0;
+            sum = ai+bi+jinwei;
+            res+=sum%2+'0'; //余数就是加过后的值
+            jinwei = sum/2; //大于2 就进位
+            
+        }
+
+            if(jinwei==1){
+                res+='1';
+            }
+        reverse(res.begin(),res.end());
+        return res;
+        
+    }
+};
+
 
 //方法二： 自己的方法
 //判断个字符串的长短，先根据短的把两个加起来，然后再根据进位对长的字符串剩下的部分加
