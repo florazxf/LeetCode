@@ -1,0 +1,42 @@
+/*
+给出 n 代表生成括号的对数，请你写出一个函数，使其能够生成所有可能的并且有效的括号组合。
+
+例如，给出 n = 3，生成结果为：
+
+[
+  "((()))",
+  "(()())",
+  "(())()",
+  "()(())",
+  "()()()"
+]
+
+*/
+class Solution {
+public:
+    vector<string> generateParenthesis(int n) {
+        vector<string>ans;
+        generate(ans,"",0,0,n);
+        return ans;
+        
+    }
+
+    void generate(vector<string> &ans,string cur,int open,int close,int max){
+
+        //递归终止：括号的数量够了
+        if(cur.size()==max*2){
+
+            ans.push_back(cur);
+            return ;
+        }
+
+        if(open<max){//左括号数量比n小，说明左括号还可以加 
+            generate(ans,cur+"(",open+1,close,max);
+        }
+        if(open>close){//左括号数量大于右括号的数量，还可以加右括号)
+            generate(ans,cur+")",open,close+1,max);
+
+        }
+
+    }
+};
