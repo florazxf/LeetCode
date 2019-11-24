@@ -1,0 +1,35 @@
+/*
+给定两个字符串形式的非负整数 num1 和num2 ，计算它们的和。
+
+注意：
+
+num1 和num2 的长度都小于 5100.
+num1 和num2 都只包含数字 0-9.
+num1 和num2 都不包含任何前导零。
+你不能使用任何內建 BigInteger 库， 也不能直接将输入的字符串转换为整数形式。
+*/
+
+class Solution {
+public:
+    string addStrings(string num1, string num2) {
+
+        int cd=0;
+        int sum=0;
+        string ans;
+        int a;
+        int b;
+        for(int i=num1.size()-1,j=num2.size()-1;i>=0||j>=0;i--,j--){
+            a = i<0?0:num1[i]-'0';//短就补零
+            b = j<0?0:num2[j]-'0';
+            sum=a+b+cd;
+            ans+=sum%10+'0'; //当前位得到的结果
+            cd = sum/10; //进位
+        }
+        if(cd==1){ //最后一位进位
+            ans+='1';
+        }
+        reverse(ans.begin(),ans.end());
+        return ans;
+        
+    }
+};
