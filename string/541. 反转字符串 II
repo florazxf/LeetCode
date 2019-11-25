@@ -1,0 +1,78 @@
+/*
+给定一个字符串和一个整数 k，你需要对从字符串开头算起的每个 2k 个字符的前k个字符进行反转。如果剩余少于 k 个字符，则将剩余的所有全部反转。如果有小于 2k 但大于或等于 k 个字符，则反转前 k 个字符，并将剩余的字符保持原样。
+
+示例:
+
+输入: s = "abcdefg", k = 2
+输出: "bacdfeg"
+要求:
+
+该字符串只包含小写的英文字母。
+给定字符串的长度和 k 在[1, 10000]范围内。
+
+
+*/
+
+//方法一
+class Solution {
+public:
+    string reverseStr(string s, int k) {
+        string t;
+        string res;
+        int cnt=k;
+        bool flag=true;//反转
+        for(int i=0;i<s.size();i++){
+            t+=s[i];
+            if((i+1)%k==0){
+
+                if(flag){//前k个反转
+                reverse(t.begin(),t.end());
+                res += t;
+                t="";
+                flag = false;
+
+                }
+                else{ //后k个不反转
+                    res+=t;
+                    t="";
+                    flag = true;
+                }   
+            }
+              
+        }
+        if(flag && t.size()>0){//剩余的反转
+            reverse(t.begin(),t.end());
+            res+=t;
+        }
+        else{//剩余的后k个不反转
+            res+=t;
+        }
+        
+        return res;
+    }
+};
+
+//方法二：反转两两交换
+class Solution {
+public:
+    string reverseStr(string s, int k) {
+
+        if(k>s.size()){
+            reverse(s.begin(),s.end());
+            return s;
+        }
+        for(int i=0;i<s.size();i=i+2*k){
+            int end = i+k-1;
+            if(end>s.size()){ //不够k个就把剩余的全都反转
+                end = s.size()-1;
+            }
+            int start = i;
+            while(start<end){ //反转前k个字符
+                char tmp = s[start];
+                s[start++] = s[end];
+                s[end--] = tmp;
+            }
+        }
+        return s;
+    }
+};
