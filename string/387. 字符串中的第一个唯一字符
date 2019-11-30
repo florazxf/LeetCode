@@ -1,0 +1,31 @@
+/*
+给定一个字符串，找到它的第一个不重复的字符，并返回它的索引。如果不存在，则返回 -1。
+
+案例:
+
+s = "leetcode"
+返回 0.
+
+s = "loveleetcode",
+返回 2.
+ 
+*/
+
+//用数组表示的hash表存储每个字母的个数
+class Solution {
+public:
+    int firstUniqChar(string s) {
+        vector<int>hash(256,0); //个数都初始化为0
+        for(int i=0;i<s.size();i++){
+	        hash[s[i]]++; //对应字母的个数加1
+        }
+
+        for(int i=0;i<s.size();i++){ //从头开始遍历
+	        if(hash[s[i]]==1){  //如果个数是1则证明找到字符串的第一个唯一字符
+                return i;
+            }
+        }
+
+        return -1; //找不到返回-1
+    }
+};
