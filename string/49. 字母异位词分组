@@ -1,0 +1,79 @@
+/*
+给定一个字符串数组，将字母异位词组合在一起。字母异位词指字母相同，但排列不同的字符串。
+
+示例:
+
+输入: ["eat", "tea", "tan", "ate", "nat", "bat"],
+输出:
+[
+  ["ate","eat","tea"],
+  ["nat","tan"],
+  ["bat"]
+]
+说明：
+
+所有输入均为小写字母。
+不考虑答案输出的顺序。
+
+
+*/
+
+class Solution {
+public:
+    vector<vector<string>> groupAnagrams(vector<string>& strs) {
+
+        vector<vector<string>> res;
+        vector<string> a;
+        a.push_back(strs[0]);
+        res.push_back(a);
+        int flag=0;
+        string cnt;
+        string c;
+        string b;
+        for(int i=1;i<strs.size();i++){
+            c = strs[i];
+            
+            for(int j=0;j<res.size();j++){
+
+                flag=0;
+                b = res[j][0];
+                if(strs[i].size()==res[j][0].size()){ //res[j]是每一个向量
+                    cnt="";
+
+                    for(int z=0;z<strs[i].size();z++){
+
+                        int pos = b.find(c[z]);
+                        
+                        if(pos==-1){ //不匹配
+                            flag=1;
+                            break;
+                        }
+                        else{ 
+                            b.erase(pos,1); //匹配就删掉
+                        }
+
+                    }
+                }
+                else{
+                    flag=1;
+                }
+
+                if(flag==0){ //每个字母都和res[j]匹配
+                    res[j].push_back(strs[i]);
+                    break;
+            }
+
+            }
+
+                if(flag==1){
+                    a.clear();
+                    a.push_back(strs[i]);
+                    res.push_back(a);
+
+                }
+
+        }
+        return res;
+        
+    }
+};
