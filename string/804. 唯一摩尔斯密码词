@@ -61,3 +61,21 @@ public:
         
     }
 };
+
+//方法二：用map去重
+int uniqueMorseRepresentations(vector<string>& words) {
+        vector<string>mose{".-","-...","-.-.","-..",".","..-.","--.","....","..",".---","-.-",".-..","--","-.","---",".--.","--.-",".-.","...","-","..-","...-",".--","-..-","-.--","--.."};
+        int len = words.size();
+        map<string,int> m; //map不允许有重复的
+        for(int i=0;i<len;i++)
+        {
+            string tmp = "";
+            for(int j=0;j<words[i].size();j++)
+            {
+                tmp+=mose[words[i][j]-'a'];
+            }
+            m.insert(pair<string,int>(tmp,1));
+        }
+        int result = m.size();
+        return result;
+    }
