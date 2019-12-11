@@ -26,6 +26,7 @@
 A.length 为偶数
 
 */
+//方法一：自己的方法 直接按题目的意思 如果一个元素出现了N次就返回
 class Solution {
 public:
     int repeatedNTimes(vector<int>& A) {
@@ -38,6 +39,40 @@ public:
                 return A[i];
             }
 
+        }
+        return 0;
+    }
+};
+//方法二：对方法一的改进，不用等于N才返回，如果一个元素出现的次数大于1就返回
+//因为一共2N个元素 1个元素出现了N次, 一共有N+1个元素, 说明剩下的元素都是不重复的,唯一的
+class Solution {
+public:
+    int repeatedNTimes(vector<int>& A) {
+        //int N = A.size()/2;
+        int cnt = 0;
+        map<int,int> hash;
+        for(int i=0;i<A.size();i++){
+            hash[A[i]]++;
+            if(hash[A[i]]>1){
+                return A[i];
+            }
+
+        }
+        return 0;
+    }
+};
+//方法三
+//因为一共2N个元素有一个元素重复了N次，那么长度为2的序列中一定有一个重复元素，那么长度为4的序列中一定有两个重复元素
+//所以我们只需要比较所有距离为 1，2 或者 3 的邻居元素即可。
+class Solution {
+public:
+    int repeatedNTimes(vector<int>& A) {
+        for(int k=1;k<=3;k++){
+            for(int i = 0;i<A.size()-k;i++){
+                if(A[i]==A[i+k]){
+                    return A[i];
+                }
+            }
         }
         return 0;
     }
