@@ -59,3 +59,13 @@ public:
         
     }
 };
+
+
+//方法二：
+//一行解决问题，看左孩子和右孩子哪个大
+class Solution {
+public:
+    int maxDepth(TreeNode* root) {
+        return (root==NULL)? 0:max(maxDepth(root->left),maxDepth(root->right))+1;
+    }
+};
