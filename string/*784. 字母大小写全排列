@@ -1,0 +1,48 @@
+/*
+给定一个字符串S，通过将字符串S中的每个字母转变大小写，我们可以获得一个新的字符串。返回所有可能得到的字符串集合。
+
+示例:
+输入: S = "a1b2"
+输出: ["a1b2", "a1B2", "A1b2", "A1B2"]
+
+输入: S = "3z4"
+输出: ["3z4", "3Z4"]
+
+输入: S = "12345"
+输出: ["12345"]
+注意：
+
+S 的长度不超过12。
+S 仅由数字和字母组成。
+
+*/
+//这个题自己做的时候没做出来，一个是没想到递归，第二个是不会写递归
+//这类搜索问题的思路就是画树形图，这个树形图一般也是递归结构，然后看着图把代码写出来。
+
+//方法一： 递归
+
+class Solution {
+public:
+    vector<string>ans; //全局变量 放最后的结果
+    vector<string> letterCasePermutation(string S) {
+        dg("",S);
+        return ans;
+    }
+
+    void dg(string letter,string S){
+        //递归终止条件
+        if(S.size()==0){
+            ans.push_back(letter);
+            return;
+        }
+        char s = S[0];//当前字符串的第一个字母
+        dg(letter+s,S.substr(1));//他本身放去继续递归
+        if(s>='a'&&s<='z'||s>='A'&&s<='Z')//是字母的话 小写变成大写 大写再变成小写再递归
+        {
+            s^=32; //小写变大写，大写变小写
+            dg(letter+s,S.substr(1));
+        }
+
+    }
+
+};
