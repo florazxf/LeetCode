@@ -46,3 +46,32 @@ public:
     }
 
 };
+
+//方法二
+class Solution {
+public:
+    vector<string>ans; //全局变量 放最后的结果
+    vector<string> letterCasePermutation(string S) {
+        dg(0,S);
+        return ans;
+    }
+
+    void dg(int index,string S){
+        //递归终止条件
+        if(index == S.size()){
+            ans.push_back(S);
+            return;
+        }
+        
+        dg(index+1,S);//他本身放去继续递归
+        if(S[index]>='a'&&S[index]<='z'||S[index]>='A'&&S[index]<='Z')//是字母的话 小写变成大写 大写再变成小写再递归
+        {
+            S[index]^=(1<<5);
+            dg(index+1,S);
+        }
+
+    }
+
+
+
+};
