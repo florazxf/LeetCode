@@ -1,0 +1,88 @@
+/*
+给定一个二叉树，找出其最小深度。
+
+最小深度是从根节点到最近叶子节点的最短路径上的节点数量。
+
+说明: 叶子节点是指没有子节点的节点。
+
+示例:
+
+给定二叉树 [3,9,20,null,null,15,7],
+
+    3
+   / \
+  9  20
+    /  \
+   15   7
+返回它的最小深度  2.
+
+
+*/
+
+
+//方法一：自己的方法
+//和二叉树的最大深度那道题一模一样，就是把取最大改成了取最小
+/**
+ * Definition for a binary tree node.
+ * struct TreeNode {
+ *     int val;
+ *     TreeNode *left;
+ *     TreeNode *right;
+ *     TreeNode(int x) : val(x), left(NULL), right(NULL) {}
+ * };
+ */
+class Solution {
+public:
+    int mind=1000000;
+    int minDepth(TreeNode* root) {
+        
+        if(root==NULL){
+            return 0;
+        }
+
+        dfs(1,root);
+        
+        return mind;
+        
+    }
+
+    void dfs(int layer,TreeNode* root){
+        
+        if(root->left==NULL && root->right==NULL){
+            if(layer<mind){
+                mind=layer;
+            }
+            return ;
+        }
+        if(root->left!=NULL){
+            dfs(layer+1,root->left);
+        }
+        if(root->right!=NULL){
+            dfs(layer+1,root->right);
+        }
+        
+        
+    }
+
+};
+
+//方法二:
+//做二叉树最大深度的时候就学到了这个方法，但直接照搬过来的时候出现了[1,2]这种情况出错
+//主要就是左孩子和右孩子都存在的时候再算最小值，否则就是一条线
+class Solution {
+public:
+    int mind=1000000;
+    int minDepth(TreeNode* root) {
+        
+        if(root==NULL){
+            return 0;
+        }
+
+        int left = minDepth(root->left);
+        int right = minDepth(root->right); 
+        
+        return (left&&right)?min(left,right)+1:left+right+1;
+        
+    }
+
+};
