@@ -1,0 +1,100 @@
+/*
+给定一个二叉树，检查它是否是镜像对称的。
+
+例如，二叉树 [1,2,2,3,4,4,3] 是对称的。
+
+    1
+   / \
+  2   2
+ / \ / \
+3  4 4  3
+但是下面这个 [1,2,2,null,3,null,3] 则不是镜像对称的:
+
+    1
+   / \
+  2   2
+   \   \
+   3    3
+
+*/
+//方法一：自己的方法
+//镜像就是左子树的左边结点和右子树的右边结点相同，所以我就给dfs每次都传p->left和q->right，如果值不相等或者一个为null另一个不为null，也就是两个不一样，就cnt++
+/**
+ * Definition for a binary tree node.
+ * struct TreeNode {
+ *     int val;
+ *     TreeNode *left;
+ *     TreeNode *right;
+ *     TreeNode(int x) : val(x), left(NULL), right(NULL) {}
+ * };
+ */
+class Solution {
+public:
+    bool isSymmetric(TreeNode* root) {
+        int cnt=0;
+        if(root==NULL){
+            return true;
+        }
+        dfs(root->left,root->right,cnt);
+        if(cnt){
+            return false;
+        } 
+        else{
+            return true;
+        }
+    }
+    void dfs(TreeNode* p,TreeNode* q,int &cnt){
+        
+        if(p==NULL&&q==NULL){
+            return ;
+        }
+        
+        if(p==NULL||q==NULL){
+            cnt++;
+            return ;
+        }
+        if(p->val!=q->val){
+            cnt++;
+            return ;
+        }
+        if(p->left==NULL && p->right==NULL && q->left==NULL && q->right==NULL){
+            return ;
+        }
+
+        dfs(p->left,q->right,cnt);
+        dfs(p->right,q->left,cnt);
+        
+
+    }
+};
+
+//方法二：题解
+//其实正常来看方法一的cnt应该是不需要存在的，题解和我的思路一样，并且没用cnt
+/**
+ * Definition for a binary tree node.
+ * struct TreeNode {
+ *     int val;
+ *     TreeNode *left;
+ *     TreeNode *right;
+ *     TreeNode(int x) : val(x), left(NULL), right(NULL) {}
+ * };
+ */
+class Solution {
+public:
+    bool isSymmetric(TreeNode* root) {
+        return dfs(root,root);
+    }
+    bool dfs(TreeNode* p,TreeNode* q){
+        
+        if(p==NULL&&q==NULL){
+            return true;
+        }
+        
+        if(p==NULL||q==NULL){
+            return false;
+        }
+        
+        return (p->val==q->val)&&dfs(p->left,q->right)&&dfs(p->right,q->left);
+    }
+};
+        
