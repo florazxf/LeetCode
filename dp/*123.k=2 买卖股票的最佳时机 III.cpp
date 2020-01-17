@@ -50,3 +50,29 @@ public:
         
     }
 };
+
+//方法二：套框架
+class Solution {
+public:
+    int maxProfit(vector<int>& prices) {
+        
+        int n=prices.size();
+        if(n==0){
+            return 0;
+        }
+        int dp[n][3][2]={0}; //记得一定要初始化成0
+        for(int i=0;i<n;i++){
+            for(int k=2;k>=1;k--){
+                if(i==0){
+                    dp[i][k][0]=0;
+                    dp[i][k][1] = -prices[0];
+                    continue;
+                }
+                dp[i][k][0] = max(dp[i-1][k][0],dp[i-1][k][1]+prices[i]);
+                dp[i][k][1] = max(dp[i-1][k][1],dp[i-1][k-1][0]-prices[i]);
+            }
+        }
+        return dp[n-1][2][0];
+        
+    }
+};
