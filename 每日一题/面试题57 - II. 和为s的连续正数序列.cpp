@@ -18,7 +18,7 @@
 
 
 
-//方法一：暴力法（自己的方法
+//方法一：自己的方法
 class Solution {
 public:
     vector<vector<int>> findContinuousSequence(int target) {
@@ -53,6 +53,42 @@ public:
             
         }
 
+        return ans;
+
+    }
+};
+
+//方法二：双指针
+
+class Solution {
+public:
+    vector<vector<int>> findContinuousSequence(int target) {
+
+
+        vector<int> eveans;
+        vector<vector<int>> ans;
+        
+        int sum=0;
+        int l=1;
+        int r=2;
+
+        while(l<r){
+            int sum=(l+r)*(r-l+1)/2;//等差数列求和公式
+            if(sum==target){
+                for(int k=l;k<=r;k++){
+                    eveans.emplace_back(k);
+                }
+                ans.emplace_back(eveans);
+                eveans.clear();
+                l++;
+            }
+            else if(sum<target){ //和比target小则r向右
+                r++;
+            }
+            else{ //和比target大，证明以l为起点的没有满足条件的，所以l++
+                l++;
+            }
+        }
         return ans;
 
     }
