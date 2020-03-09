@@ -54,3 +54,19 @@ public:
 
     }
 };
+
+//方法二：
+/*
+等差数列公式k*(k+1)/2=n 就是我们从1到第k行的硬币和为n
+k = sqrt(2n+1/4) - 1/2。然后求整即可。
+唯一的问题是，这里2n+1/4有可能会超出sqrt函数的参数范围。
+于是，我们可以变换一下， k = sqrt(2) * sqrt(n+1/8) - 1/2，这样求平方根就不会超限了。
+
+class Solution {
+public:
+    int arrangeCoins(int n) {
+        return int(sqrt(2)*sqrt(n+0.125)-0.5);
+
+    }
+};
+*/
