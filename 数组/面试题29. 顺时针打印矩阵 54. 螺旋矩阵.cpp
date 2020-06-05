@@ -21,6 +21,58 @@
 */
 
 
+
+//方法一：
+
+//循环打印： “从左向右、从上向下、从右向左、从下向上” 四个方向循环
+class Solution {
+public:
+    vector<int> spiralOrder(vector<vector<int>>& matrix) {
+        
+        if (matrix.empty())	return {};
+        
+
+        int l = 0;
+        int t = 0;
+        int r = matrix[0].size()-1;
+        int b = matrix.size()-1;
+
+        vector<int> ans((r+1)*(b+1));
+
+        int index=0;
+        while(1){
+           
+            //从左到右
+            for(int i=l;i<=r;i++){
+                ans[index++] = matrix[t][i];
+            }
+            if(++t>b) break;
+            //从上到下
+            for(int i=t;i<=b;i++){
+                ans[index++] = matrix[i][r];
+            }
+            if(l>--r) break;
+            //从右往左
+            for(int i=r;i>=l;i--){
+                ans[index++] = matrix[b][i];
+            }
+            if(t>--b) break;
+            //从下到上
+            for(int i=b;i>=t;i--){
+                ans[index++] = matrix[i][l];
+            }
+            if(r<++l) break;
+        }
+
+        return ans;
+        
+    }
+};
+
+
+//方法二：
+
+
 class Solution {
 public:
     vector<int> spiralOrder(vector<vector<int>>& matrix) {
