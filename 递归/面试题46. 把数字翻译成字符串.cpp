@@ -10,7 +10,9 @@
 解释: 12258有5种不同的翻译，分别是"bccfi", "bwfi", "bczi", "mcfi"和"mzi"
 */
 
-//方法一：
+//方法一：字符串遍历 递归
+
+//没有剪枝 
 class Solution {
 public:
     int translateNum(int num) {
@@ -34,5 +36,15 @@ public:
         }
         
         return 1;//只有单个字母
+    }
+};
+
+//方法二 数字求余递归
+class Solution {
+public:
+    int translateNum(int num) {
+
+        if(num<10) return 1;
+        return (num%100<10||num%100>25)?translateNum(num/10):translateNum(num/10)+translateNum(num/100);
     }
 };
