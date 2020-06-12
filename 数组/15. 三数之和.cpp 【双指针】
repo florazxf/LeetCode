@@ -16,7 +16,7 @@
 ]
 
 */
-//方法一：自己的方法
+//方法一：自己的方法 用set去重
 /*
 */
 class Solution {
@@ -57,29 +57,11 @@ public:
                         tmp.push_back(nums[i]);
                         tmp.push_back(nums[left]);
                         tmp.push_back(nums[right]);
-                        /*
-                        if(ans.size()!=0){
-                             for(vector<int> ansi:ans){
-
-                                if(ansi==tmp){
-                                 flag=1;
-                                break;
-                            }
-
-                             }
-                             
-
-                        }*/
                         
-                        //if(flag==0){
-                            ans.push_back(tmp);
-
-                        //}
+                        ans.push_back(tmp);
                         
                         tmp.clear();
                         left++;
-                        //flag=0;
-
                     }
                 }
 
@@ -94,6 +76,62 @@ public:
 
         set<vector<int>> s(ans.begin(),ans.end());
         ans.assign(s.begin(),s.end());
+
+        return ans;
+
+    }
+};
+
+//方法二： 双指针 遍历时去重
+class Solution {
+public:
+    vector<vector<int>> threeSum(vector<int>& nums) {
+
+        vector<vector<int>> ans;
+        if(nums.size()<=2) return ans;
+
+        sort(nums.begin(),nums.end());//对nums从小到大排序
+        
+
+
+        int left=0;
+        int right = nums.size()-1;
+       
+        for(int i=0;i<nums.size()-2;i++){
+            if(nums[i]>0){break;}
+            
+            left = i+1;
+            right = nums.size()-1;
+
+            while(left<right){
+                    int lvalue = nums[left];
+                    int rvalue = nums[right];
+                
+                if(lvalue+rvalue+nums[i]==0){
+                    vector<int> tmp{nums[i],lvalue,rvalue};
+                    ans.push_back(tmp);
+                    //去重
+                    while(left<right &&nums[left]==lvalue){left++;}
+                    while(left<right &&nums[right]==rvalue){right--;}
+                }
+                    
+                else if(lvalue+rvalue+nums[i]<0){//加的负数太小了 需要加小大的负数
+                        left++;
+                }
+                else if(lvalue+rvalue+nums[i]>0){//加的正数太大了  需要加小点的正数
+                        right--;
+                }
+
+
+            }
+
+                //去重 nums[i+1]和nums[i]相等则直接跳过
+            while((i+1)<(nums.size()-2)&&nums[i]==nums[i+1]){
+                    i++;
+            }
+
+        }
+
 
         return ans;
 
