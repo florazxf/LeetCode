@@ -1,0 +1,26 @@
+
+/**
+ * Definition for singly-linked list.
+ * struct ListNode {
+ *     int val;
+ *     ListNode *next;
+ *     ListNode(int x) : val(x), next(NULL) {}
+ * };
+ */
+ 
+ 1. 创建链表
+ ListNode* p = new ListNode;
+ 创建值为v的结点 ListNode* p = new ListNode(v);
+ 
+2. 得到一个单链表常用方法
+ ListNode* p = new ListNode;
+ ListNode* head = new ListNode;
+ head = p;
+ 
+ //获得链表的值
+ while(xxx!=NULL){
+ l->next = new ListNode(v);
+ l = l->next;
+ }
+ 
+ return head->next;
