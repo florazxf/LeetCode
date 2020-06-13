@@ -74,7 +74,7 @@ public:
         
     }
 };
-//方法二：
+//方法二： 思路和方法一一样 就是写法更简洁明了
 /**
  * Definition for singly-linked list.
  * struct ListNode {
@@ -100,10 +100,8 @@ public:
             sum = l1val+l2val+carry;//取l1的值和l2的值相加
             carry = sum/10;//进位
 
-            ListNode* p = new ListNode;
-            p->val = sum%10;
-            l->next = p;
-            l=p;
+            l->next = new ListNode(sum%10);
+            l=l->next;
             
             if(l1!=NULL){l1=l1->next;}
             if(l2!=NULL){l2=l2->next;}
@@ -113,9 +111,8 @@ public:
         
 
         if(carry){ //最后一位有进位
-            ListNode* p = new ListNode;
-            p->val = carry;
-            l->next=p;
+            l->next = new ListNode(carry);
+            l=l->next;
         }
 
         return head->next;
