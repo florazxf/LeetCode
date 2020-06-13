@@ -55,3 +55,18 @@ public:
         return dp[n];
     }
 };
+//20.6.13刷到每日一题的方法
+class Solution {
+public:
+    int climbStairs(int n) {
+        int dp[n+1];//爬到当前楼梯的方法
+
+        dp[0]=1;
+        dp[1] =1;
+        for(int i=2;i<=n;i++){
+            dp[i] = dp[i-1]+dp[i-2]; //到达第i阶的方法数等于第i阶的方法数加上本阶的方法数
+        }
+        
+        return dp[n];
+    }
+};
