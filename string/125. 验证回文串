@@ -58,3 +58,60 @@ public:
         
     }
 };
+
+
+6.19每日一题做的
+class Solution {
+public:
+
+    bool is(char c){
+        if((c>='A'&&c<='Z')||(c>='a'&&c<='z')||(c>='0'&&c<='9')){//是字母或是z数字即满足条件
+            return true;
+        }
+        else{
+            return false;
+        }        
+    }
+    bool isPalindrome(string s) {
+
+        int left=0;
+        int right = s.size()-1;
+
+
+        while(left<right){
+           // cout<<left<<' '<<right<<endl;
+
+
+
+            if(is(s[left])&&is(s[right])){//左右都是字母或数字
+
+                if((s[left]>='A'&&s[left]<='Z')||(s[right]>='A'&&s[right]<='Z')){//是大写字母
+                    if(s[left]>='A'&&s[left]<='Z'){ s[left]=s[left]-'A'+'a';}//cout<<s[left];
+                    if(s[right]>='A'&&s[right]<='Z'){  s[right]=s[right]-'A'+'a';}
+                
+                }
+
+                if(s[left]==s[right]){
+                    left++;
+                    right--;
+                }
+                else{
+                    return false;
+                }
+
+            }
+            else{
+                if(!is(s[left])){
+                    left++;
+                }
+
+                if(!is(s[right])){
+                    right--;
+                }
+            }
+
+        }
+        return true;
+        
+    }
+};
