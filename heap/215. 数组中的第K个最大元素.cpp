@@ -21,3 +21,21 @@
 */
 
 // 用自带的优先队列priority_queue
+
+class Solution {
+public:
+    int findKthLargest(vector<int>& nums, int k) {
+        priority_queue<int,vector<int>,greater<int>> pq;//最小堆
+        for(auto& num:nums){
+            if(pq.size()==k && pq.top()>=num)//num比堆顶元素小不可能是答案
+                continue;
+            if(pq.size()==k){
+                pq.pop();//删除堆顶元素并自动整理
+            }
+            pq.push(num);//插入元素num并自动整理
+        }
+        return pq.top();//k大小的最小堆的堆顶即为所求
+    }
+};
+
+//方法二：自己实现堆
