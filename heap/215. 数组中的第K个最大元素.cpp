@@ -39,3 +39,46 @@ public:
 };
 
 //方法二：自己实现堆
+
+/*
+先根据数组创建一个最大堆
+然后删除k-1次堆顶元素，得到的堆的堆顶即第K个最大元素
+*/
+
+class Solution {
+public:
+    void maxHeapify(vector<int>& a, int i, int heapSize){
+        int l=i*2+1,r=i*2+2,largest = i;
+
+        if(l<heapSize && a[l]>a[largest]){ //i的左子树比i大
+            largest=l;
+        }
+        if(r<heapSize && a[r]>a[largest]){ //i的右子树比i大
+            largest=r;
+        }
+        if(largest!=i){
+            swap(a[i],a[largest]);//子节点比当前节点大，就交换
+            maxHeapify(a,largest,heapSize);//保证以此根节点的子树比其子节点都大
+        }
+    }
+
+    void buildMaxHeap(vector<int>& a, int heapSize){//创建堆
+        for(int i=heapSize/2;i>=0;--i){//从第一个非叶子节点为根节点的子树开始，将其调整为最大堆
+            maxHeapify(a,i,heapSize); //调整堆
+        }
+    }
+    int findKthLargest(vector<int>& nums, int k) {
+
+        int heapSize = nums.size();
+        buildMaxHeap(nums,heapSize);
+        for(int i=nums.size()-1;i>=nums.size()-k+1;--i){//删除k-1次根顶元素
+            //删除根顶元素
+            swap(nums[0],nums[i]); //把堆顶元素删了，就要让最后一个节点作为堆顶元素
+            --heapSize;
+            maxHeapify(nums,0,heapSize);
+        }
+
+        return nums[0];
+
+    }
+};
