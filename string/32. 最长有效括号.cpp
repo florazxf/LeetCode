@@ -74,3 +74,30 @@ public:
 //方法二：栈
 
 //方法三：动态规划
+
+/*
+dp[i]为以i结尾的最长有效括号的长度
+有效的子串一定以)结尾，因此我们可以知道以(结尾的子串对应的dp必定为0 ，我们只需要求解)在dp 数组中对应位置的值。
+*/
+
+class Solution {
+public:
+    int longestValidParentheses(string s) {
+        int n=s.size();
+        vector<int>dp(n,0);//dp[i]为以i结尾的最长有效括号的长度
+        int maxans = 0;
+        for(int i=1;i<n;i++){
+            if(s[i]==')'){
+                if(s[i-1]=='('){//()
+                    dp[i] = 2+(i>=2?dp[i-2]:0);
+                }
+                else if((i-dp[i-1])>0 && s[i-dp[i-1]-1]=='('){//....)) 且s[i-dp[i-1]-1]=='('
+                    dp[i]=2+dp[i-1]+(i-dp[i-1]>=2?dp[i-dp[i-1]-2]:0);
+                    
+                }
+            }
+            maxans = max(maxans, dp[i]);
+        }
+        return maxans;
+    }
+};
