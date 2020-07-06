@@ -84,3 +84,40 @@ public:
         return dp[n-1];
     }
 };
+
+
+//刷每日一题做的方法
+class Solution {
+public:
+    int uniquePaths(int m, int n) {
+
+        vector<vector<int>> dp(m,vector<int>(n,1)); //dp[i][j]到达ij的可能的路径
+
+        for(int i=1;i<m;i++){
+            for(int j=1;j<n;j++){  
+                dp[i][j]  = dp[i-1][j]+dp[i][j-1];
+            }
+        }
+
+        return dp[m-1][n-1];
+        
+    }
+};
+
+//唉 还是没有优化
+class Solution {
+public:
+    int uniquePaths(int m, int n) {
+
+        //vector<vector<int>> dp(m,vector<int>(n,1)); //dp[i][j]到达ij的可能的路径
+        vector<int> dp(n,1);
+        for(int i=1;i<m;i++){
+            for(int j=1;j<n;j++){  
+                dp[j]  = dp[j-1]+dp[j];
+            }
+        }
+
+        return dp[n-1];
+        
+    }
+};
