@@ -25,23 +25,19 @@ dp[i][1] = max(dp[i-1][1], dp[i-2][0] - prices[i])
 class Solution {
 public:
     int maxProfit(vector<int>& prices) {
-        int n = prices.size();
-        if(n==0){
-            return 0;
-        }
 
-        int dpi0=0;
-        int dpi1=-prices[0];
-        int dppre = 0;//代表dp[i-2][0]
+        //dp[i][0] = max(dp[i-1][0],dp[i-1][1]+prices[i])
+        //dp[i][1] = max(dp[i-1][1],dp[i-2][0]-prices[i]) 每次sell之后要等一天才交易，那第i天buy的时候，要从i-2的黄台转移
 
-        for(int i=0;i<n;i++){
-            int temp = dpi0;
-            dpi0 = max(dpi0,dpi1+prices[i]);
-            dpi1 = max(dpi1,dppre-prices[i]); //dppre是第i-2天
-            //dp[i][0] = max(dp[i-1][0],dp[i-1][1]+prices[i]);
-            //dp[i][1] = max(dp[i-1][1],dp[i-2][0]-prices[i]);
-            dppre = temp;
+        int dp_i_0 = 0;
+        int dp_i_1 = INT_MIN;
+        int dp_pre_0 = 0;//代表dp[i-2][0]
+        for(int i=0;i<prices.size();i++){
+            int temp = dp_i_0;
+            dp_i_0 = max(dp_i_0,dp_i_1+prices[i]);
+            dp_i_1 = max(dp_i_1,dp_pre_0-prices[i]);
+            dp_pre_0 = temp;
         }
-        return dpi0;
+        return dp_i_0;
     }
 };
