@@ -75,3 +75,38 @@ public:
 };
 
 //方法二: bfs 队列
+
+class Solution {
+public:
+
+    bool isBipartite(vector<vector<int>>& graph) {
+        
+        vector<int>color(graph.size(),0);//0:未染色，1：染成红色，2：染成绿色
+        for(int i=0;i<graph.size();i++){
+            if(color[i]==0){//当前结点未被染色
+                queue<int> q;
+                q.push(i);
+                color[i] = 1;
+                while(!q.empty()){
+                    int node = q.front();
+                    int cNei = (color[node]==1?2:1);//相邻节点染成不同的颜色
+                    q.pop();
+                    for(int neighbor:graph[node]){//相邻节点
+                        if(color[neighbor]==0){
+                            q.push(neighbor);//把它相邻的结点也染色
+                            color[neighbor] = cNei;
+                        }
+                        else if(color[neighbor]!=cNei){
+                            return false;
+                        }
+
+                    }
+
+            }
+
+            }
+
+        }
+        return true;
+    }
+};
