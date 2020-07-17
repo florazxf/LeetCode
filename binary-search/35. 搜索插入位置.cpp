@@ -44,3 +44,40 @@ public:
         return left;//被顺序插入的位置
     }
 };
+
+//7.17每日一题遇到后自己做的结果
+/*
+问题在于： 求mid时候忘了mid = left+(right-left)/2; 这样可以防止溢出
+还有就是当target大于nums[mid]的时候mid=left+1 而不是mid = left 因为mid已经不是target了，正是因为这样 才有了边界情况 我还单独处理了一下！！ 下次一定要记住二分法的基本套路
+*/
+class Solution {
+public:
+    int searchInsert(vector<int>& nums, int target) {
+        int left = 0;
+        int right = nums.size()-1;
+        if(target>nums[right]){
+            return right+1;
+        }
+        else if(target<nums[left]){
+            return left;
+        }
+        while(left<=right){
+            int mid = left+(right-left)/2;
+            //cout<<mid<<' ';
+            if(nums[mid]<target){
+                if(left==mid){
+                    return right;
+                }
+                left = mid;
+
+            }
+            else if(nums[mid]>target){
+                right = mid;
+            }
+            else{
+                return mid;
+            }
+        }
+        return left;
+    }
+};
