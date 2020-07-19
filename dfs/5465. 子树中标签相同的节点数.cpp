@@ -37,7 +37,7 @@ public:
             return;
         }
         vis[x]=true;
-        vector<int> tmp(26);//tmp是访问的子节点的label
+        vector<int> tmp(26);//tmp存的是x所有子节点的label的信息
         for(auto& y:tree[x]){
             dfs(y,tmp,labels); //return后的tmp已经更新了y的字节点的label 因为a是&传的是地址
         }
