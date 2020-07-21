@@ -7,12 +7,39 @@
  *     ListNode(int x) : val(x), next(NULL) {}
  * };
  */
+
+ 链表因为元素不连续，而是靠指针指向下一个元素的位置，所以不存在数组的扩容问题；如果知道某一元素的前驱和后驱，操作指针即可删除该元素或者插入新元素，时间复杂度 O(1)。  
+ 但是正因为存储空间不连续，你无法根据一个索引算出对应元素的地址，所以不能随机访问；而且由于每个元素必须存储指向前后元素位置的指针，会消耗相对更多的储存空间。  
+ 
+ 
  
  1. 创建链表
- ListNode* p = new ListNode;
- 创建值为v的结点 ListNode* p = new ListNode(v);
+ `ListNode* p = new ListNode;`
+ 创建值为v的结点: `ListNode* p = new ListNode(v);`
  
-2. 得到一个单链表常用方法
+ 2. 链表遍历框架 (兼具迭代和递归结构：  
+ 
+ ```cpp
+ /* 基本的单链表节点 */
+class ListNode {
+    int val;
+    ListNode next;
+}
+
+void traverse(ListNode head) {
+    for (ListNode p = head; p != null; p = p.next) {
+        // 迭代访问 p.val
+    }
+}
+
+void traverse(ListNode head) {
+    // 递归访问 head.val
+    traverse(head.next)
+}
+ 
+ ```
+ 
+2. 得到一个单链表常用方法  
  ListNode* p = new ListNode;
  ListNode* head = new ListNode;
  head = p;
