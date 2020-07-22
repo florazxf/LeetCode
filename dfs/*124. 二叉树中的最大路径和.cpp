@@ -41,6 +41,8 @@ public:
 
         //对于二叉树的一个结点，该结点的最大路径和取决于该结点的值与该节点左右子节点的最大贡献值
         int pricenewpath = root->val+leftmaxG+rightmaxG; //该结点的最大路径和
+        
+        //题目说路径不一定经过根节点，即最大路径可能在局部子树中产生，所以求当前的子树的最大路径和和历史最大值比较
         maxSum = max(pricenewpath,maxSum);//left-root-right 作为路径与历史最大值作比较
 
         //返回结点的最大贡献值，也就是root的单边最大分支给上游
