@@ -27,6 +27,29 @@
  *     TreeNode(int x) : val(x), left(NULL), right(NULL) {}
  * };
  */
+ //方法一：2020/7/22 重新整理二叉树路径总和 题解的方法
+ /*
+ 因为是【根节点】到【叶子结点】
+ 我们dfs的时候可以把问题转化成 是否存在从【当前节点的子节点】到叶子结点的路径，满足路径和为sum-val
+ 到最后叶子结点的时候 其值等于sum即满足条件
+ */
+ class Solution {
+public:
+    //bool has=false;
+    bool hasPathSum(TreeNode* root, int sum) {
+        if(root==NULL){
+            return false;
+        }
+        if(root->left==NULL && root->right==NULL){ //是叶节点 sum已经减过他前面路径的值了
+            return root->val==sum;
+        }
+        return hasPathSum(root->left,sum-root->val)||hasPathSum(root->right,sum-root->val);
+    }
+
+
+
+};
+ //方法一： 这种方法以后就不要用了
 class Solution {
 public:
     bool has=false;
