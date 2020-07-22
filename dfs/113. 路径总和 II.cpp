@@ -19,7 +19,30 @@
    [5,8,4,5]
 ]
 
-
+//方法三：2020/7/22 整理的题解
+class Solution {
+public:
+    vector<vector<int>> res;
+    vector<int>path;
+    void dfs(TreeNode* root,int sum){
+        if(root==NULL){
+            return;
+        }
+        path.push_back(root->val);
+        if(root->left==NULL && root->right==NULL && root->val==sum){//满足条件的叶节点
+            res.push_back(path);
+        }
+        dfs(root->left,sum-root->val);
+        dfs(root->right,sum-root->val);
+        path.pop_back();//回溯，把刚刚加入的状态移除
+    }
+    vector<vector<int>> pathSum(TreeNode* root, int sum) {
+        if(root){
+            dfs(root,sum);
+        }
+        return res;    
+    }
+};
 //方法一：递归 自己的方法
 //这个题就是在路径总和1的基础上，加了个返回给定目标的路径，所以我就设了个全局变量res来存储满足条件的路径
 /**
