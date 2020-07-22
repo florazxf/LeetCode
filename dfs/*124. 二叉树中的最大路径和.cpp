@@ -36,16 +36,14 @@ public:
         }
         
         //计算左右结点的最大贡献值
-        int leftmaxG = max(maxGain(root->left),0);//最大贡献值大于0，才选该节点
-        int rightmaxG = max(maxGain(root->right),0);
+        int leftmaxG = max(maxGain(root->left),0);//计算左边分支最大值，左边分支如果为负数还不如不选择。最大贡献值大于0，才选该节点
+        int rightmaxG = max(maxGain(root->right),0);//计算右边分支最大值
 
         //对于二叉树的一个结点，该结点的最大路径和取决于该结点的值与该节点左右子节点的最大贡献值
-
         int pricenewpath = root->val+leftmaxG+rightmaxG; //该结点的最大路径和
+        maxSum = max(pricenewpath,maxSum);//left-root-right 作为路径与历史最大值作比较
 
-        maxSum = max(pricenewpath,maxSum);
-
-        //放回结点的最大贡献值
+        //返回结点的最大贡献值，也就是root的单边最大分支给上游
         return root->val+max(leftmaxG,rightmaxG);
     }
     int maxPathSum(TreeNode* root) {
