@@ -28,6 +28,7 @@ root = [10,5,-3,3,2,null,11,3,-2,null,1], sum = 8
 
 //方法二： 前缀和 单次遍历
 /*
+https://leetcode-cn.com/problems/path-sum-iii/solution/qian-zhui-he-di-gui-hui-su-by-shi-huo-de-xia-tian/
 前缀和：达到当前元素的路径上，所有元素的和
 本文要求任意两个结点之间的元素和为sum，那么我们可以转换成， 如果curSum-sum=preSum，那么也就是找到了从节点A到结点B的路径和是sum， 这个curSum就是结点B的前缀和，preSum就是结点A的前缀和  
 因此我们只用遍历的时候把每个节点的前缀和存在哈希表中， 在哈希表中找是否存在curSum-sum 即可。
