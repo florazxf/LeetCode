@@ -25,6 +25,55 @@ root = [10,5,-3,3,2,null,11,3,-2,null,1], sum = 8
 3.  -3 -> 11
 
 */
+
+//方法二： 前缀和 单次遍历
+/*
+前缀和：达到当前元素的路径上，所有元素的和
+本文要求任意两个结点之间的元素和为sum，那么我们可以转换成， 如果curSum-sum=preSum，那么也就是找到了从节点A到结点B的路径和是sum， 这个curSum就是结点B的前缀和，preSum就是结点A的前缀和  
+因此我们只用遍历的时候把每个节点的前缀和存在哈希表中， 在哈希表中找是否存在curSum-sum 即可。
+因为不同路径的前缀和可能一样，所以我们哈新表中要存的是前缀和出现的次数unordered_map<int,int>prefixSumCount;//用哈希表存前缀和及出现次数 key:前缀和 value：出现次数
+最后记得左右子树遍历结束，重回到本次后把本层的前缀和从哈希表中减去，避免回溯后影响上一层 因为本层的并不属于上一层的前缀和
+*/
+/**
+ * Definition for a binary tree node.
+ * struct TreeNode {
+ *     int val;
+ *     TreeNode *left;
+ *     TreeNode *right;
+ *     TreeNode(int x) : val(x), left(NULL), right(NULL) {}
+ * };
+ */
+ //4:17
+class Solution {
+public:
+    int ans=0;//最后结果
+    unordered_map<int,int>prefixSumCount;//用哈希表存前缀和及出现次数 key:前缀和 value：出现次数
+    //curSum = prefixSum+sum; 
+    int pathSum(TreeNode* root, int sum) {
+        prefixSumCount[0] = 1;//前缀和为0的一条路径
+        dfs(root,0,sum,prefixSumCount);
+        return ans;
+    }
+    void dfs(TreeNode* root, int curSum, int sum, unordered_map<int,int>& prefixSumCount){
+        //1. 递归终止条件
+        if(root==NULL){
+            return;
+        }
+        //2. 本层要做的事： 对于当前结点来说，找有没有curSum-sum 存在在哈希表中
+        curSum+=root->val;
+        if(prefixSumCount.find(curSum-sum)!=prefixSumCount.end()){//存在
+            ans+=prefixSumCount[curSum-sum];//可能前面有好几条路径的和的前缀和都是curSum-sum
+        }
+        prefixSumCount[curSum]++;//更新当前结点的前缀和
+        //3. 进入下一层
+        dfs(root->left,curSum,sum,prefixSumCount);
+        dfs(root->right,curSum,sum,prefixSumCount);
+        //4. 回到本层，恢复状态
+        prefixSumCount[curSum]--;
+    
+    }
+};
+
 //方法一：双重dfs
 
 /*
@@ -68,4 +117,4 @@ public:
     }
 };
 
-//方法二： 前缀和
+
