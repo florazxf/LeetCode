@@ -21,7 +21,7 @@
 
 
 /*
-因为先做的是
+因为先做的是[687.最长同值路径](https://github.com/florazxf/LeetCode/blob/master/dfs/687.%20%E6%9C%80%E9%95%BF%E5%90%8C%E5%80%BC%E8%B7%AF%E5%BE%84.cpp) 
 这道题比那道简单，不用判断子节点和自己的值是否相等， 直接获取左子节点的深度left和右子节点的深度right，然后 同样是left+right和全局ans比， max(left,right)+1是返回给上一个结点的贡献
 */
 
