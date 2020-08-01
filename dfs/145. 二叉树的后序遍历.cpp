@@ -41,3 +41,33 @@ public:
         ans.push_back(root->val);
     }
 };
+
+//迭代
+class Solution {
+public:
+    
+    vector<int> postorderTraversal(TreeNode* root) {
+        vector<int> ans;
+        stack<TreeNode*>stk;
+        if(root!=nullptr) stk.push(root);
+        while(!stk.empty()){
+            TreeNode* t = stk.top();
+            stk.pop();
+            if(t!=nullptr){
+                //根节点 后序遍历 最后访问先入栈
+                stk.push(t);//在右节点之前重新插入该节点，以便在最后处理（访问值）
+                stk.push(nullptr);//nullptr跟随t插入，标识已经访问过，还没有被处理
+                //右节点
+                if(t->right) stk.push(t->right);
+                //左结点
+                if(t->left) stk.push(t->left);
+            }
+            else{ //当前要访问的结点
+                ans.push_back(stk.top()->val);
+                stk.pop();
+            }
+        }
+        return ans;
+    }
+
+};
