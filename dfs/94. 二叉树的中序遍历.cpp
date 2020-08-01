@@ -43,3 +43,33 @@ public:
         dfs(root->right);
     }
 };
+
+//方法二：迭代
+class Solution {
+public:
+   
+    vector<int> inorderTraversal(TreeNode* root) {
+        vector<int> ans;
+        stack<TreeNode*>stk;
+        if(root!=nullptr) stk.push(root);
+        while(!stk.empty()){
+            TreeNode* t = stk.top();
+            stk.pop();
+            if(t!=nullptr){
+                //右节点 最后访问 先压栈
+                if(t->right) stk.push(t->right);
+                //根节点
+                stk.push(t);
+                stk.push(nullptr);
+                //左结点
+                if(t->left) stk.push(t->left);
+            }
+            else{
+                ans.push_back(stk.top()->val);
+                stk.pop();
+            }
+        }
+        return ans;
+    }
+
+};
