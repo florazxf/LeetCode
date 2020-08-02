@@ -70,3 +70,42 @@ public:
     }
 
 };
+
+//方法三：莫里斯遍历
+/*
+Morris遍历则将空间复杂度降到了O(1)级别。Morris遍历用到了“线索二叉树”的概念，其实就是利用了叶子节点的左右空指针来存储某种遍历前驱节点或者后继节点。因此没有使用额外的空间。
+*/
+class Solution {
+public:
+    
+    vector<int> preorderTraversal(TreeNode* root) {
+        vector<int>ans;
+        TreeNode* cur = root;
+        while(cur!=nullptr){
+
+            if(cur->left==nullptr){
+                ans.push_back(cur->val);
+                cur=cur->right;
+            }
+            else{
+                TreeNode* predecessor = cur->left;
+                while(predecessor->right && predecessor->right!=cur){//Go right till meet none or cur
+                    predecessor=predecessor->right;
+                }
+
+                if(predecessor->right==nullptr){
+                    ans.push_back(cur->val);
+                    predecessor->right=cur;
+                    cur = cur->left;
+                }
+                else{//predecessor->right==cur
+                    predecessor->right=nullptr;
+                    cur = cur->right;
+                }
+            }
+        }
+
+        return ans;
+    }
+
+};
