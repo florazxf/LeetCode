@@ -73,3 +73,40 @@ public:
     }
 
 };
+
+//方法三：莫里斯遍历
+/*
+和前序遍历差不多 ，只是中序是在predecessor->right==cur的时候输出cur。而前序遍历是predecessor->right==nullptr的时候输出
+*/
+class Solution {
+public:
+   
+    vector<int> inorderTraversal(TreeNode* root) {
+        vector<int> ans;
+        TreeNode* cur = root;
+        while(cur!=nullptr){
+            if(cur->left==nullptr){
+                ans.push_back(cur->val);
+                cur = cur->right;
+            }
+            else{
+                TreeNode* predecessor = cur->left;
+                while(predecessor->right!=nullptr && predecessor->right!=cur){
+                    predecessor = predecessor->right;
+                }
+                if(predecessor->right==nullptr){
+                    predecessor->right=cur;
+                    cur=cur->left;
+                }
+                else{
+                    ans.push_back(cur->val);
+                    predecessor->right=nullptr;
+                    cur = cur->right;
+                }
+            }
+        }
+
+        return ans;
+    }
+
+};
