@@ -63,3 +63,41 @@ public:
         
     }
 };
+//方法二： hash_map 
+/*
+2020/8/14 每日一题， 自己做的和上面几个月前自己做的一模一样。
+然后看了题解是用了hash_map key是右括号，value是左括号。 感觉这种方法也应该学习一下，如果以后遇到判断的多的不能一一列举就得用这种办法。
+*/
+class Solution {
+public:
+    bool isValid(string s) {
+    int n = s.size();
+    if(n%2==1){//是奇数肯定不匹配
+        return false;
+    }
+    unordered_map<char,char> hash{
+        {')', '('},
+        {']', '['},
+        {'}', '{'}
+    };
+    stack<char> stk;
+
+    for(int i=0;i<s.size();i++){
+
+        if(hash.count(s[i])){//是右括号
+            if(stk.empty()||stk.top()!=hash[s[i]]){
+                return false;
+            }
+            else{
+                stk.pop();
+            }
+        }
+        else{
+            stk.push(s[i]);
+        }
+
+    }
+    
+    return stk.empty();
+    }
+};
