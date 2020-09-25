@@ -30,7 +30,13 @@ target = 13
 输出: false
 */
 
-//二分查找：自己做的class Solution {
+//二分查找：自己做的
+
+/*
+时间复杂度：标准的二分查找 O(log(mn))
+空间复杂度：O(1)
+*/
+class Solution {
     public boolean searchMatrix(int[][] matrix, int target) {
         int m = matrix.length;
         if(m==0){
