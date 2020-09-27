@@ -49,3 +49,20 @@ public class AriExer {
         }
     }
 }
+
+//方法三： 用带标签的continue
+import java.util.Scanner;
+public class AriExer {
+    public static void main(String[] args){
+        label:for(int i=2;i<=100;i++){
+
+            boolean isFlag = true;
+            for(int j = 2;j<=Math.sqrt(i);j++){
+                if(i%j==0){//不符合条
+                    continue label;
+                }
+            }
+            System.out.println(i);
+        }
+    }
+}
