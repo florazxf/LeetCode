@@ -40,6 +40,32 @@ public:
     }
 };
 
+//12.6 用java做的 看了题解才想到
+//要找是否存在值的时候应该要想到hash表
+
+class Solution {
+    public int[] twoSum(int[] nums, int target) {
+        
+        HashMap<Integer,Integer> hashMap = new HashMap<Integer, Integer>();//key为值 value为索引
+
+        for (int i = 0; i < nums.length; i++) {
+
+            //遍历hashMap 找 target-nums[i]是否存在
+            int v = target-nums[i];
+            if (hashMap.containsKey(v)){
+
+                return new int[]{hashMap.get(v),i};
+            }
+
+            hashMap.put(nums[i],i); //加入hashMap
+
+        }
+
+        return new int[0];
+
+    }
+}
+
 //方法二： hashmap 两次遍历
 /*
 在第一次迭代中，我们将每个元素的值和它的索引添加到表中。
@@ -70,6 +96,9 @@ public:
         return ans;
     }
 };
+
+
+
 //方法三：暴力法
 class Solution {
 public:
@@ -88,3 +117,20 @@ public:
         return ans;
     }
 };
+
+//12.6 用java做的
+class Solution {
+    public int[] twoSum(int[] nums, int target) {
+        
+        for (int i = 0; i < nums.length-1; i++) {
+            for (int j = i+1; j < nums.length; j++) {
+                if(nums[i]+nums[j]==target){
+                     return new int[]{i,j};
+                }
+            }
+        }
+
+        return new int[0];
+
+    }
+}
