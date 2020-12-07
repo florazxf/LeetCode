@@ -137,3 +137,57 @@ public:
 
     }
 };
+
+
+//12.7 java
+
+
+/*
+要注意的是对每一层循环而言,相邻两次枚举的元素不能重复
+*/
+class Solution {
+    public List<List<Integer>> threeSum(int[] nums) {
+
+        //先给nums排序
+        Arrays.sort(nums);
+        List<List<Integer>> ans = new ArrayList<List<Integer>>();
+        Map<Integer,Integer> hash = new HashMap<Integer,Integer>();
+        int n = nums.length;
+        for(int i=0;i<nums.length;i++){
+            //和上一次枚举的数不一样
+            if(i>0 && nums[i]==nums[i-1]){
+                continue;
+            }
+
+            int r = n-1;
+            int target = -nums[i];
+            for (int l = i+1;l<n;l++){
+                //和上一次枚举的数不一样
+                if(l>i+1 && nums[l-1]==nums[l]){
+                    continue;
+                }
+                //三数之和比0大则指针左移
+                while(l<r && nums[l]+nums[r]>target){
+                    --r;
+                }
+                //循环退出
+                if(l==r){
+                    break;
+                }
+
+                if(nums[i]+nums[l]+nums[r]==0){
+                    List<Integer> list = new ArrayList<Integer>();
+                    list.add(nums[i]);
+                    list.add(nums[l]);
+                    list.add(nums[r]);
+                    ans.add(list);
+                }
+
+            }
+
+        }
+
+        return ans;
+
+    }
+}
