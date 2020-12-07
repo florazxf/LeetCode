@@ -191,3 +191,59 @@ class Solution {
 
     }
 }
+
+//labudadong
+/*
+这样思路更清晰一些
+*/
+    public List<List<Integer>> threeSum(int[] nums) {
+
+        //先给nums排序
+        Arrays.sort(nums);
+        List<List<Integer>> ans = new ArrayList<List<Integer>>();
+
+        for(int i=0;i<nums.length;i++){
+
+
+            int l = i+1;
+            int r = nums.length-1;
+
+            while(l<r){
+
+                int sum = nums[l]+nums[r]+nums[i];
+                int left = nums[l];
+                int right = nums[r];
+                if(sum<0){
+                    while(l<r && nums[l]==left){
+                        l++;
+                    }
+                }
+                else if(sum>0){
+                    while(l<r && nums[r]==right){
+                        r--;
+                    }
+                }
+                else{
+                    List<Integer> list = new ArrayList<Integer>();
+                    list.add(nums[i]);
+                    list.add(nums[l]);
+                    list.add(nums[r]);
+                    ans.add(list);
+                    while(l<r && nums[l]==left){
+                        l++;
+                    }
+                    while(l<r && nums[r]==right){
+                        r--;
+                    }
+                }
+            }
+
+            while(i<nums.length-1 && nums[i]==nums[i+1]){
+                i++;
+            }
+        }
+
+        return ans;
+
+    }
+
