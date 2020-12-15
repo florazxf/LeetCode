@@ -20,10 +20,47 @@
 
 //方法一：暴力 超时  第一反应就是暴力，但是超时了
 
+//方法二 ：贪心官方
+/*
+从前往后遍历，先找到第一个不满足条件的；
+然后从当前 往0 遍历 减1
+然后从当前往后的都变成9 
+*/
+
+class Solution {
+    public int monotoneIncreasingDigits(int N) {
+
+
+        char[] chars = Integer.toString(N).toCharArray(); //int 转char
+        int i=1;
+        //只要满足条件就过
+        while(i<chars.length && chars[i-1]<=chars[i]){
+            i++;
+        }
+        //有不满足条件的
+        if(i<chars.length){
+            //把前面位不满足条件的都减1
+            while(i>0 && chars[i-1]>chars[i]){
+                chars[i-1]-=1;
+                i--;
+            }
+            //前面减1 了为保持最大 后面的都弄成9
+
+            for(i+=1;i<chars.length;i++){
+                chars[i] = '9';
+            }
+        }
+        return Integer.parseInt(new String(chars)); //char转int
+
+    }
+}
+
 //方法二：贪心
 /*
 用贪心的思路想就是看当前位比前一位小的话，那为了得到的数字大就只能是9，当前是9那前一位就是减1.
 当前位变成9之后，当前位后面的可能右比当前位小了，所以要把后面的也判断一下
+
+这个思路每次前面的减了以后，后面的每次都要判断， 其实只要一直减前面的减到最前面 ，再把后面的全弄成9就好 这就是官方的
 */
 
 class Solution {
