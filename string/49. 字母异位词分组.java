@@ -15,8 +15,33 @@
 所有输入均为小写字母。
 不考虑答案输出的顺序。
 
-
 */
+
+//2020/12/15  java
+
+/*
+把所有单词排序后放map中
+主要学到 String 如何排序
+还有Map.getOrDefault 当Map集合中有这个key时，就使用这个key值；如果没有就使用默认值defaultValue
+*/
+class Solution {
+    public List<List<String>> groupAnagrams(String[] strs) {
+        Map<String, List<String>> map = new HashMap<String, List<String>>();
+        for (String str : strs) {
+            char[] array = str.toCharArray();
+            Arrays.sort(array);
+            String key = new String(array);
+            //Map.getOrDefault 当Map集合中有这个key时，就使用这个key值；如果没有就使用默认值defaultValue
+            List<String> list = map.getOrDefault(key, new ArrayList<String>());
+            list.add(str);
+            map.put(key, list);
+        }
+        return new ArrayList<List<String>>(map.values());
+    }
+}
+
+
+//之前c++写的
 
 class Solution {
 public:
