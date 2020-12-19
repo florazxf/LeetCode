@@ -42,7 +42,63 @@
 '''
 
 
+//12.19 每日一题 java
 
+
+// 先找规律 (i,j) --> (j,n-i-1)   那第 (j,n-i-1)到的就是-->(n-i-1,n-j-1) 以此类推 
+class Solution {
+    public void rotate(int[][] matrix) {
+
+        int n = matrix.length;
+        for(int i=0;i<n/2;i++){
+            for(int j=i;j<n-1-i;j++){
+                int temp = matrix[i][j];
+                matrix[i][j] = matrix[n-j-1][i];
+                matrix[n-j-1][i] = matrix[n-i-1][n-j-1];
+                matrix[n-i-1][n-j-1] = matrix[j][n-i-1];
+                matrix[j][n-i-1] = temp;
+            }
+        }
+
+    }
+}
+
+
+
+
+//方法二 用翻转代替旋转
+
+
+class Solution {
+    public void rotate(int[][] matrix) {
+
+        int n = matrix.length;
+
+        //上下翻转
+        for(int i=0;i<n/2;i++){
+            for(int j=0;j<n;j++){
+                int temp = matrix[i][j];
+                matrix[i][j] = matrix[n-i-1][j];
+                matrix[n-i-1][j] = temp;
+
+            }
+        }
+
+        //对角线翻转
+        for(int i=0;i<n;i++){
+            for(int j=i;j<n;j++){
+                int temp = matrix[i][j];
+                matrix[i][j] = matrix[j][i];
+                matrix[j][i] = temp;
+            }
+        }
+
+    }
+}
+
+
+
+//方法一
 class Solution(object):
     def rotate(self, matrix):
         """
