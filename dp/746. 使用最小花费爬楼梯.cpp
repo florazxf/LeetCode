@@ -21,6 +21,17 @@ cost 的长度将会在 [2, 1000]。
 每一个 cost[i] 将会是一个Integer类型，范围为 [0, 999]。
 
 */
+//12.21 每日一题
+class Solution {
+    public int minCostClimbingStairs(int[] cost) {
+        int n = cost.length;
+        int[] dp = new int[n+1];//达到第i层所需要的最低花费
+        for(int i=2;i<n+1;i++){
+            dp[i] = Math.min(dp[i-1]+cost[i-1],dp[i-2]+cost[i-2]);
+        }
+        return dp[n];
+    }
+}
 
 //方法一：动态规划
 class Solution {
