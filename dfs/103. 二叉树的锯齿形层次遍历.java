@@ -17,8 +17,94 @@
   [15,7]
 ]
 */
+// 官方 双端队列
+//用双端队列 代替 list 存当前层的元素
+class Solution {
+    public List<List<Integer>> zigzagLevelOrder(TreeNode root) {
+        List<List<Integer>> ans = new ArrayList<List<Integer>>();
+        if(root==null){
+            return ans;
+        }
+        Queue<TreeNode> queue = new LinkedList<TreeNode>();
+        boolean fromR = false;
+        queue.offer(root);
+        while(!queue.isEmpty()){
+            int len = queue.size();
+            Deque<Integer> curLayer = new LinkedList<Integer>();
+            for(int i=0;i<len;i++){
+                TreeNode curNode = queue.poll(); //得到队首元素并出队
+                //用双端队列存 当前层的结果
+                if(fromR){ //从右往左 则从头插
+                    curLayer.offerFirst(curNode.val);
+                }
+                else{ //从左往右 则从尾插
+                    curLayer.offerLast(curNode.val);
+                }
+               
 
+                
+                if(curNode.left!=null){
+                    queue.offer(curNode.left);
+                }   
+                if(curNode.right!=null){
+                    queue.offer(curNode.right);
+                }
 
+            }
+
+            ans.add(new ArrayList(curLayer));
+            fromR=!fromR;
+
+        }
+        return ans;
+    }
+}
+
+//12.22 每日一题
+/**
+ * Definition for a binary tree node.
+ * public class TreeNode {
+ *     int val;
+ *     TreeNode left;
+ *     TreeNode right;
+ *     TreeNode(int x) { val = x; }
+ * }
+ */
+class Solution {
+    public List<List<Integer>> zigzagLevelOrder(TreeNode root) {
+        List<List<Integer>> ans = new ArrayList<List<Integer>>();
+        if(root==null){
+            return ans;
+        }
+        Queue<TreeNode> queue = new LinkedList<TreeNode>();
+        boolean fromR = false;
+        queue.offer(root);
+        while(!queue.isEmpty()){
+            int len = queue.size();
+            List<Integer> curLayer = new ArrayList<>();
+            for(int i=0;i<len;i++){
+                TreeNode curNode = queue.poll(); //得到队首元素并出队
+                curLayer.add(curNode.val);
+                
+                if(curNode.left!=null){
+                    queue.offer(curNode.left);
+                }   
+                if(curNode.right!=null){
+                     queue.offer(curNode.right);
+                }
+                
+
+            }
+            if(fromR){
+                Collections.reverse(curLayer);
+            }
+            ans.add(curLayer);
+            fromR=!fromR;
+
+        }
+        return ans;
+    }
+}
 /*
 层序遍历+一个step如果从又到左就reverse
 */
