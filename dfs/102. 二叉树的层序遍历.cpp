@@ -21,6 +21,50 @@
 
 */
 
+//12.22 java写的
+/*
+没想到用当前queue的size 来作为这一层元素的标志
+*/
+/**
+ * Definition for a binary tree node.
+ * public class TreeNode {
+ *     int val;
+ *     TreeNode left;
+ *     TreeNode right;
+ *     TreeNode(int x) { val = x; }
+ * }
+ */
+class Solution {
+    public List<List<Integer>> levelOrder(TreeNode root) {
+        List<List<Integer>> ans = new ArrayList<List<Integer>>();
+        if(root==null){
+            return ans;
+        }
+        Queue<TreeNode> queue = new LinkedList<TreeNode>();
+        
+        
+        queue.offer(root);
+        while(!queue.isEmpty()){
+            List<Integer> curLayer = new LinkedList<Integer>();
+            int len = queue.size();
+            for(int i=0;i<len;i++){
+                 TreeNode currNode = queue.poll(); //出队
+                 curLayer.add(currNode.val);
+                 if(currNode.left!=null){
+                    queue.offer(currNode.left);
+                 }            
+                 if(currNode.right!=null){
+                    queue.offer(currNode.right);
+                 }
+            
+            }
+            ans.add(curLayer);
+        }
+        return ans;
+    }
+}
+
+
 /**
  * Definition for a binary tree node.
  * struct TreeNode {
