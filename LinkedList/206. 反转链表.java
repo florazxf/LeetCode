@@ -32,3 +32,18 @@ class Solution {
         return prev;
     }
 }
+
+
+// 方法二：递归
+class Solution {
+    public ListNode reverseList(ListNode head) {
+        //base case
+        if(head==null || head.next==null){ //只有当前结点一个结点则返回
+            return head;
+        }
+        ListNode last = reverseList(head.next); //得到反转后的头结点
+        head.next.next = head;
+        head.next=null;
+        return last;
+    }
+}
