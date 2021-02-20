@@ -12,6 +12,36 @@
 原因：342 + 465 = 807
 */
 
+
+// 2.20 用java写的
+class Solution {
+    public ListNode addTwoNumbers(ListNode l1, ListNode l2) {
+        ListNode head = new ListNode();
+        ListNode l = head;
+        int carry = 0;
+        int sum;
+        while(l1!=null || l2 !=null){
+            int l1val = l1==null?0:l1.val;
+            int l2val = l2==null?0:l2.val;
+            sum = l1val+l2val+carry;
+            carry = sum/10; //进位
+            l.next = new ListNode(sum%10);
+            l = l.next;
+            if(l1!=null){
+                l1 = l1.next;
+            } 
+            if(l2!=null){
+                l2 = l2.next;
+            }
+        }
+
+        if(carry>0){
+            l.next = new ListNode(carry);
+        }
+        return head.next;
+    }
+}
+
 //方法一：自己写的
 /**
  * Definition for singly-linked list.
