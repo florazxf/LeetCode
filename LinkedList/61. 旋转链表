@@ -39,6 +39,36 @@ public:
     }
 };
 
+
+//2.20用java做的
+class Solution {
+    public ListNode rotateRight(ListNode head, int k) {
+
+        if(head==null || head.next ==null){
+            return head;
+        }
+        
+        ListNode new_tail = head; //新链表的尾
+        ListNode old_tail = head; //旧链表的尾
+        int len = 1; //链表长度
+        // 找到旧链表的尾部
+        while(old_tail.next!=null){
+            old_tail = old_tail.next;
+            len++;
+        }
+        old_tail.next = head;
+
+        // 找到新链表的尾
+        for(int i = 0;i<len-k%len-1;i++){
+            new_tail = new_tail.next;
+        }
+        head = new_tail.next;
+        new_tail.next = null;
+        return head;
+    }
+}
+
+
 //方法二：自己做的
 
 class Solution {
