@@ -32,3 +32,17 @@ public:
         
     }
 };
+
+//2.20 整理链表专题的时候用java做的
+class Solution {
+    public ListNode middleNode(ListNode head) {
+
+        ListNode fast = head;
+        ListNode low = head;
+        while(fast!=null && fast.next!=null){
+            fast = fast.next.next;
+            low = low.next;
+        }
+        return low;
+    }
+}
