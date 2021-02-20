@@ -34,3 +34,34 @@ public:
         {return NULL;}
     }
 };
+
+// 用java写的
+public class Solution {
+    public ListNode detectCycle(ListNode head) {
+        ListNode fast = head;
+        ListNode slow = head;
+        boolean hasCycle = false;
+        // 判断是否有环：找到第一次相遇点
+        while(fast!=null && fast.next!=null){
+            fast = fast.next.next;
+            slow = slow.next;
+            if(fast==slow){
+                hasCycle = true;
+                break;
+            }
+           
+        }
+        if(hasCycle){
+            slow = head;
+            //head 和 相遇点 一起往后走 相遇点即为入环点
+            while(fast!=slow){
+                fast = fast.next;
+                slow = slow.next;
+            }
+            return fast;
+        }
+        else{
+            return null;
+        }
+    }
+}
