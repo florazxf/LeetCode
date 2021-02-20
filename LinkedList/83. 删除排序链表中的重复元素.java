@@ -11,6 +11,28 @@
 
 */
 
+
+// 2.20 自己用java写的
+
+class Solution {
+    public ListNode deleteDuplicates(ListNode head) {
+        ListNode l = head;
+        while(l!=null && l.next!=null){
+            if(l.next.val==l.val){ //相等就删除下一个节点
+                l.next = l.next.next;
+            }
+            else{ //直到不相等才指向下一个节点
+                l = l.next;
+            }
+            
+        }
+        return head;
+
+    }
+}
+
+
+
 //方法一
 class Solution {
 public:
