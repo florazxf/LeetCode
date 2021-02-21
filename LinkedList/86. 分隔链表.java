@@ -9,6 +9,42 @@
 
 */
 
+
+//2.21 用java写的
+public class Solution {
+    /**
+     * 
+     * @param head ListNode类 
+     * @param x int整型 
+     * @return ListNode类
+     */
+    public ListNode partition (ListNode head, int x) {
+        // write code here
+        // 哑节点指向两个链表的头部
+        ListNode l1 = new ListNode(0);
+        ListNode l2 = new ListNode(0);
+        // 指针指向两个链表的尾部
+        ListNode l1_curr = l1;
+        ListNode l2_curr = l2;
+        while(head!=null){
+            if(head.val<x){
+                l1_curr.next = head;
+                l1_curr = l1_curr.next;
+            }
+            else{
+                l2_curr.next = head;
+                l2_curr = l2_curr.next;
+            }
+            head = head.next;
+        }
+        l1_curr.next = l2.next;
+        l2_curr.next= null;
+        return l1.next;
+    }
+}
+
+
+
 class Solution {
 public:
     ListNode* partition(ListNode* head, int x) {
