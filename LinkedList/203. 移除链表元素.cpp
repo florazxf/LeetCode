@@ -6,6 +6,30 @@
 输出: 1->2->3->4->5
 */
 
+//2.21 java 写的
+
+class Solution {
+    public ListNode removeElements(ListNode head, int val) {
+        ListNode dummyHead = new ListNode();
+        dummyHead.next = head;
+        ListNode prev = dummyHead;
+        while(prev!=null && prev.next!=null){
+            if(prev.next.val==val){
+                prev.next = prev.next.next;
+            }
+            else{// 当下一个节点不要被删除的时候再移
+                prev = prev.next;
+            }   
+        }
+        return dummyHead.next;
+
+    }
+}
+
+
+
+
+
 //方法一
 class Solution {
 public:
