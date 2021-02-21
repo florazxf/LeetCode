@@ -11,6 +11,52 @@
 输出: 2->3
 
 */
+
+//2.21 
+
+
+* 需要一个虚拟头节点dummyHead，用prev指向dummyHead，用prev来控制新的链表的连接
+这样在删除重复节点后，剩余节点就挂在prev之后
+* 当有重复节点，prev.next = difNode prev的下一个节点为和前面不重复的，这样就把之前那些重复的都删了
+* 没有重复节点，prev = curr
+
+
+
+public class Solution {
+    /**
+     * 
+     * @param head ListNode类 
+     * @return ListNode类
+     */
+    public ListNode deleteDuplicates (ListNode head) {
+        // write code here
+        ListNode dummyHead = new ListNode(0);
+        dummyHead.next = head;
+        ListNode prev = dummyHead;
+        ListNode curr = prev.next;
+        boolean hasRepeatNode = false;
+        while(curr!=null){
+            hasRepeatNode = false;
+            ListNode difNode = curr.next;
+            while(difNode!=null && difNode.val==curr.val){
+                difNode = difNode.next;
+                hasRepeatNode = true;
+            }
+            if(hasRepeatNode){// 有重复节点
+                prev.next = difNode;
+            }
+            else{
+                prev = curr;
+            }
+            curr = difNode;
+        }
+        return dummyHead.next;
+    }
+}
+
+
+
+
 //方法一：迭代
 class Solution {
 public:
