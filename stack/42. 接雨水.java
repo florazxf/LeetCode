@@ -6,6 +6,55 @@
 输出: 6
 */
 
+
+// 用栈
+
+当前元素比栈顶小就入栈， 比栈顶大就出栈，这时出栈的是坑里的高度， 新的栈顶就是左边的边界
+这个时候找到两边低的那边 减去坑里的高度 就是这里能接到的雨水
+
+class Solution {
+    public int trap(int[] height) {
+        int n = height.length;
+        Stack<Integer> stack = new Stack<Integer>();//存索引
+        int ans = 0;
+        for(int i =0;i<n;i++){
+            //当前元素比栈顶元素大 就弹出
+            while(!stack.empty()&&height[i]>height[stack.peek()]){
+                //出栈的是坑里的元素
+                int top = stack.pop(); //出栈的栈顶元素的索引
+               
+                if(stack.empty()){
+                    break;
+                }
+                //找到两边边界的距离
+                int distance = i-stack.peek()-1;
+                //找到两边低的那个减去里面的
+                int bounded_height = Math.min(height[i], height[stack.peek()])-height[top];
+               
+                ans += distance*bounded_height;
+            }
+
+            //入栈
+            stack.push(i);
+        }
+
+        
+        return ans;
+
+    }
+
+
+
+}
+
+
+
+
+
+
+
+
+
 //方法一： 栈
 
 /*
