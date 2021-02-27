@@ -25,6 +25,27 @@
 解释: 输入为: [5,1,4,null,null,3,6]。
      根节点的值为 5 ，但是其右子节点值为 4 。
 */
+
+//2.27 
+class Solution {
+    public boolean isValidBST(TreeNode root) {
+        return isValidBST(root,Long.MIN_VALUE,Long.MAX_VALUE);
+    }
+
+    public boolean isValidBST(TreeNode root,long lower,long upper){
+        if(root==null){
+            return true;
+        }
+        if(root.val<=lower || root.val>=upper){
+            return false;
+        }
+        return isValidBST(root.left,lower,root.val) && isValidBST(root.right,root.val,upper);
+    }
+}
+
+
+
+
 //方法一：自己的方法
 //做这道题就知道 二叉搜索树的中序遍历是递增序列，那么我就把中序遍历的结果放到数组nums里，然后再判断nums是否是递增序列
 /**
